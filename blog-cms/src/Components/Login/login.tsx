@@ -127,7 +127,7 @@ const Login = () => {
   };
 
   const handleKeyPress = (event: React.KeyboardEvent) => {
-    if (event.keyCode === 13 || event.which === 13) {
+    if (event.key === "Enter") {
       state.isButtonDisabled || handleLogin();
     }
   };
@@ -150,7 +150,7 @@ const Login = () => {
   return (
     <form className={classes.container} noValidate autoComplete="off">
       <Card className={classes.card}>
-        <CardHeader className={classes.header} title="Login App" />
+        <CardHeader className={classes.header} title="Blog CMS Login" />
         <CardContent>
           <div>
             <TextField
