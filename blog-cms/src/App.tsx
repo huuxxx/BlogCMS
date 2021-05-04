@@ -1,10 +1,11 @@
+import React from 'react';
 import {
   BrowserRouter as Router,
   Switch,
   Route,
   Link,
   useRouteMatch,
-  useParams
+  useParams,
 } from 'react-router-dom';
 import Login from './Components/Login/login';
 
@@ -41,7 +42,7 @@ export default function App() {
 }
 
 function Home() {
-  return <Login/>;
+  return <Login />;
 }
 
 function About() {
@@ -49,7 +50,7 @@ function About() {
 }
 
 function Topics() {
-  let match = useRouteMatch();
+  const match = useRouteMatch();
 
   return (
     <div>
@@ -60,9 +61,7 @@ function Topics() {
           <Link to={`${match.url}/components`}>Components</Link>
         </li>
         <li>
-          <Link to={`${match.url}/props-v-state`}>
-            Props v. State
-          </Link>
+          <Link to={`${match.url}/props-v-state`}>Props v. State</Link>
         </li>
       </ul>
 
