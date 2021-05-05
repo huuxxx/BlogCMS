@@ -1,0 +1,25 @@
+.container {
+  display: flex;
+  flex: wrap;
+  width: 400;
+  margin: 0px;
+  left: 50%;
+  top: 50%;
+  /* transform: translate(-50%, -50%); */
+  position: relative;
+}
+
+.loginBtn {
+  margin-top: 16px;
+  flex-grow: 1;
+}
+
+.header {
+  text-align: center;
+  background: #212121;
+  color: #fff;
+}
+
+.card {
+  margin-top: 200px;
+}

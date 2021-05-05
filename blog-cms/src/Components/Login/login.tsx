@@ -1,37 +1,16 @@
-// Taken from https://surajsharma.net/blog/react-login-form-typescript
 import React, { useReducer, useEffect } from 'react';
-import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import CardHeader from '@material-ui/core/CardHeader';
 import Button from '@material-ui/core/Button';
+import { useHistory } from 'react-router-dom';
+import './login.css';
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    container: {
-      display: 'flex',
-      flexWrap: 'wrap',
-      width: 400,
-      margin: `${theme.spacing(0)} auto`,
-    },
-    loginBtn: {
-      marginTop: theme.spacing(2),
-      flexGrow: 1,
-    },
-    header: {
-      textAlign: 'center',
-      background: '#212121',
-      color: '#fff',
-    },
-    card: {
-      marginTop: theme.spacing(10),
-    },
-  })
-);
+const axios = require('axios').default;
 
-// state type
+const LOGINENDPOINT = 'hux-dev.com/blogapi/login/';
 
 type State = {
   username: string;
@@ -99,8 +78,8 @@ const reducer = (state: State, action: Action): State => {
 };
 
 const Login = () => {
-  const classes = useStyles();
   const [state, dispatch] = useReducer(reducer, initialState);
+  const history = useHistory();
 
   useEffect(() => {
     if (state.username.trim() && state.password.trim()) {
@@ -117,17 +96,25 @@ const Login = () => {
   }, [state.username, state.password]);
 
   const handleLogin = () => {
-    if (state.username === 'abc@email.com' && state.password === 'password') {
-      dispatch({
-        type: 'loginSuccess',
-        payload: 'Login Successfully',
+    axios
+      .get(LOGINENDPOINT)
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      .then((response: any) => {
+        if (response.status === '200') {
+          history.push('dashboard');
+        } else
+          dispatch({
+            type: 'loginFailed',
+            payload: 'Incorrect username or password',
+          });
+      })
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      .catch((error: any) => {
+        dispatch({
+          type: 'loginFailed',
+          payload: 'Login error',
+        });
       });
-    } else {
-      dispatch({
-        type: 'loginFailed',
-        payload: 'Incorrect username or password',
-      });
-    }
   };
 
   const handleKeyPress = (event: React.KeyboardEvent) => {
@@ -154,9 +141,9 @@ const Login = () => {
     });
   };
   return (
-    <form className={classes.container} noValidate autoComplete="off">
-      <Card className={classes.card}>
-        <CardHeader className={classes.header} title="Blog CMS Login" />
+    <form className="container" noValidate autoComplete="off">
+      <Card className="card">
+        <CardHeader className="header" title="Blog CMS Login" />
         <CardContent>
           <div>
             <TextField
@@ -189,7 +176,7 @@ const Login = () => {
             variant="contained"
             size="large"
             color="secondary"
-            className={classes.loginBtn}
+            className="loginBtn"
             onClick={handleLogin}
             disabled={state.isButtonDisabled}
           >
