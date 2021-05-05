@@ -14,7 +14,6 @@ export default function App() {
           <Route path="/Dashboard">
             <Dashboard />
           </Route>
-          ;
         </Switch>
       </div>
     </Router>
