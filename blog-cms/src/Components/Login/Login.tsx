@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React, { useReducer, useEffect } from 'react';
 import TextField from '@material-ui/core/TextField';
 import Card from '@material-ui/core/Card';
@@ -10,7 +11,7 @@ import './login.css';
 
 const axios = require('axios').default;
 
-const LOGINENDPOINT = 'hux-dev.com/blogapi/login/';
+const LOGINENDPOINT = 'https://localhost:44326/api/Authenticate/login';
 
 type State = {
   username: string;
@@ -96,10 +97,24 @@ const Login = () => {
   }, [state.username, state.password]);
 
   const handleLogin = () => {
+    const headers = {
+      'Content-Type': 'application/json',
+    };
+
     axios
-      .get(LOGINENDPOINT)
+      .post(
+        LOGINENDPOINT,
+        {
+          username: state.username,
+          password: state.password,
+        },
+        {
+          headers,
+        }
+      )
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       .then((response: any) => {
+        console.log(response);
         if (response.status === '200') {
           history.push('dashboard');
         } else
@@ -110,6 +125,7 @@ const Login = () => {
       })
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       .catch((error: any) => {
+        console.log(error);
         dispatch({
           type: 'loginFailed',
           payload: 'Login error',
