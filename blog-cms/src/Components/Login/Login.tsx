@@ -97,21 +97,11 @@ const Login = () => {
   }, [state.username, state.password]);
 
   const handleLogin = () => {
-    const headers = {
-      'Content-Type': 'application/json',
-    };
-
     axios
-      .post(
-        LOGINENDPOINT,
-        {
-          username: state.username,
-          password: state.password,
-        },
-        {
-          headers,
-        }
-      )
+      .post(LOGINENDPOINT, {
+        username: state.username,
+        password: state.password,
+      })
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       .then((response: any) => {
         console.log(response);
