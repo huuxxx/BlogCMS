@@ -86,8 +86,9 @@ const reducer = (state: State, action: Action): State => {
 
 const Login = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
-  //   const history = useHistory();
-  //   const token = useToken();
+  const history = useHistory();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { token, setToken } = useToken();
   const [responseData, setResponseData] = useState<ResponseData>();
 
   useEffect(() => {
@@ -113,8 +114,10 @@ const Login = () => {
       .then((response: AxiosResponse) => {
         if (response.status === 200) {
           setResponseData(response.data);
-          //   const respData = JSON.stringify(response.data);
+          // eslint-disable-next-line no-console
           console.log(responseData);
+          history.push('/Dashboard');
+          token.setToken(responseData?.token);
         }
       })
       .catch((error: string) => {

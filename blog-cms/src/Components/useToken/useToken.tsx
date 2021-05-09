@@ -10,12 +10,12 @@ export default function useToken() {
   const [token, setToken] = useState(getToken());
 
   type TokenProp = {
-    userToken: string;
+    token: string;
   };
 
-  const saveToken = ({ userToken }: TokenProp) => {
-    sessionStorage.setItem('token', JSON.stringify(userToken));
-    setToken(userToken);
+  const saveToken = ({ token: tokenParam }: TokenProp) => {
+    sessionStorage.setItem('token', JSON.stringify(tokenParam));
+    setToken(tokenParam);
   };
 
   return {
