@@ -1,5 +1,5 @@
-/* eslint-disable no-console */
-import React, { useReducer, useEffect } from 'react';
+import React, { useReducer, useEffect, useState } from 'react';
+import { AxiosResponse } from 'axios';
 import TextField from '@material-ui/core/TextField';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -7,7 +7,8 @@ import CardActions from '@material-ui/core/CardActions';
 import CardHeader from '@material-ui/core/CardHeader';
 import Button from '@material-ui/core/Button';
 import { useHistory } from 'react-router-dom';
-import './login.css';
+import './Login.css';
+import useToken from '../useToken/useToken';
 
 const axios = require('axios').default;
 
@@ -36,6 +37,11 @@ type Action =
   | { type: 'loginSuccess'; payload: string }
   | { type: 'loginFailed'; payload: string }
   | { type: 'setIsError'; payload: boolean };
+
+type ResponseData = {
+  token: string;
+  expiration: string;
+};
 
 const reducer = (state: State, action: Action): State => {
   switch (action.type) {
@@ -80,7 +86,9 @@ const reducer = (state: State, action: Action): State => {
 
 const Login = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
-  const history = useHistory();
+  //   const history = useHistory();
+  //   const token = useToken();
+  const [responseData, setResponseData] = useState<ResponseData>();
 
   useEffect(() => {
     if (state.username.trim() && state.password.trim()) {
@@ -96,26 +104,20 @@ const Login = () => {
     }
   }, [state.username, state.password]);
 
-  const handleLogin = () => {
-    axios
+  const handleLogin = async () => {
+    await axios
       .post(LOGINENDPOINT, {
         username: state.username,
         password: state.password,
       })
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      .then((response: any) => {
-        console.log(response);
-        if (response.status === '200') {
-          history.push('dashboard');
-        } else
-          dispatch({
-            type: 'loginFailed',
-            payload: 'Incorrect username or password',
-          });
+      .then((response: AxiosResponse) => {
+        if (response.status === 200) {
+          setResponseData(response.data);
+          //   const respData = JSON.stringify(response.data);
+          console.log(responseData);
+        }
       })
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      .catch((error: any) => {
-        console.log(error);
+      .catch((error: string) => {
         dispatch({
           type: 'loginFailed',
           payload: 'Login error',
