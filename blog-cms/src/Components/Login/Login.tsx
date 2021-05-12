@@ -9,7 +9,6 @@ import Button from '@material-ui/core/Button';
 import { useHistory } from 'react-router-dom';
 import './Login.css';
 import Cookies from 'universal-cookie';
-import useToken from '../useToken/useToken';
 
 const cookies = new Cookies();
 
@@ -90,7 +89,6 @@ const reducer = (state: State, action: Action): State => {
 const Login = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const history = useHistory();
-  const token = useToken();
   const [responseData, setResponseData] = useState<ResponseData>();
 
   useEffect(() => {
@@ -118,8 +116,6 @@ const Login = () => {
           setResponseData(response.data);
           history.push('/Dashboard');
           cookies.set('token', JSON.stringify(responseData?.token));
-          // eslint-disable-next-line no-console
-          console.log(cookies.get('token'));
         }
       })
       .catch((error: string) => {
