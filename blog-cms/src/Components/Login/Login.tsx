@@ -8,7 +8,10 @@ import CardHeader from '@material-ui/core/CardHeader';
 import Button from '@material-ui/core/Button';
 import { useHistory } from 'react-router-dom';
 import './Login.css';
+import Cookies from 'universal-cookie';
 import useToken from '../useToken/useToken';
+
+const cookies = new Cookies();
 
 const axios = require('axios').default;
 
@@ -87,8 +90,7 @@ const reducer = (state: State, action: Action): State => {
 const Login = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const history = useHistory();
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { token, setToken } = useToken();
+  const token = useToken();
   const [responseData, setResponseData] = useState<ResponseData>();
 
   useEffect(() => {
@@ -114,10 +116,10 @@ const Login = () => {
       .then((response: AxiosResponse) => {
         if (response.status === 200) {
           setResponseData(response.data);
-          // eslint-disable-next-line no-console
-          console.log(responseData);
           history.push('/Dashboard');
-          token.setToken(responseData?.token);
+          cookies.set('token', JSON.stringify(responseData?.token));
+          // eslint-disable-next-line no-console
+          console.log(cookies.get('token'));
         }
       })
       .catch((error: string) => {
