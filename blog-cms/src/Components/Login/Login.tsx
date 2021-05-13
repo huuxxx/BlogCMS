@@ -114,7 +114,7 @@ const Login = () => {
       .then((response: AxiosResponse) => {
         if (response.status === 200) {
           setResponseData(response.data);
-          history.push('/Dashboard');
+          history.push('/app/dashboard');
           cookies.set('token', JSON.stringify(responseData?.token));
         }
       })

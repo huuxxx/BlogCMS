@@ -9,11 +9,11 @@ export default function App() {
   return (
     <Router>
       <div>
+        <Route path="/" exact component={Login} />
         <Switch>
-          <Route path="/newblog" component={NewBlog} />
-          <Route path="/blogs" component={Blogs} />
-          <Route path="/dashboard" component={Dashboard} />;
-          <Route path="/" component={Login} />
+          <Route path="/app/newblog" exact component={NewBlog} />
+          <Route path="/app/blogs" exact component={Blogs} />
+          <Route path="/app/dashboard" exact component={Dashboard} />
         </Switch>
       </div>
     </Router>
