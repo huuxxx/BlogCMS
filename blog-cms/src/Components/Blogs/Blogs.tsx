@@ -8,12 +8,12 @@ const GET_BLOGS_ENDPOINT =
   'https://localhost:44358/api/BlogItems/GetBlogLatest';
 
 type ResponseData = {
-  Id: number;
-  Title: string;
-  Content: string;
-  Requests: string;
-  Datecreated: Date;
-  DateModified: Date;
+  id: number;
+  title: string;
+  content: string;
+  requests: string;
+  datecreated: Date;
+  dateModified: Date;
 };
 
 const Blogs = () => {
@@ -25,7 +25,6 @@ const Blogs = () => {
       .then((response: AxiosResponse) => {
         if (response.status === 200) {
           setResponseData(response.data);
-          console.log(response.data);
         }
       })
       .catch((error: string) => {});
@@ -35,7 +34,7 @@ const Blogs = () => {
     <div>
       <NavMenu />
       Blogs page
-      <div>{responseData?.Content}</div>
+      <div>{responseData?.content}</div>
     </div>
   );
 };
