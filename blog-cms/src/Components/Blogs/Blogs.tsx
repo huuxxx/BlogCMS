@@ -7,7 +7,7 @@ const axios = require('axios').default;
 const GET_BLOGS_ENDPOINT =
   'https://localhost:44358/api/BlogItems/GetBlogLatest';
 
-type ResponseData = {
+type BlogResponseItem = {
   id: number;
   title: string;
   content: string;
@@ -17,7 +17,7 @@ type ResponseData = {
 };
 
 const Blogs = () => {
-  const [responseData, setResponseData] = useState<ResponseData>();
+  const [responseData, setResponseData] = useState<BlogResponseItem>();
 
   useEffect(() => {
     axios
