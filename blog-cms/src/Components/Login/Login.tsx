@@ -14,7 +14,7 @@ const cookies = new Cookies();
 
 const axios = require('axios').default;
 
-const LOGINENDPOINT = 'https://localhost:44358/api/Authenticate/login';
+const LOGIN_ENDPOINT = 'https://localhost:44358/api/Authenticate/login';
 
 type State = {
   username: string;
@@ -107,7 +107,7 @@ const Login = () => {
 
   const handleLogin = async () => {
     await axios
-      .post(LOGINENDPOINT, {
+      .post(LOGIN_ENDPOINT, {
         username: state.username,
         password: state.password,
       })
