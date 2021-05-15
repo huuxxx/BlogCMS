@@ -34,6 +34,7 @@ const Blogs = () => {
     <div>
       <NavMenu />
       Blogs page
+      <div>{responseData?.title}</div>
       <div>{responseData?.content}</div>
     </div>
   );
