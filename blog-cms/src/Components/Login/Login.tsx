@@ -6,7 +6,7 @@ import CardActions from '@material-ui/core/CardActions';
 import CardHeader from '@material-ui/core/CardHeader';
 import Button from '@material-ui/core/Button';
 import { useHistory } from 'react-router-dom';
-import './Login.css';
+import './LoginStyle.css';
 import Cookies from 'universal-cookie';
 
 const cookies = new Cookies();
