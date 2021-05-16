@@ -1,5 +1,4 @@
-import React, { useReducer, useEffect, useState } from 'react';
-import { AxiosResponse } from 'axios';
+import React, { useReducer, useEffect } from 'react';
 import TextField from '@material-ui/core/TextField';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -39,11 +38,6 @@ type Action =
   | { type: 'loginSuccess'; payload: string }
   | { type: 'loginFailed'; payload: string }
   | { type: 'setIsError'; payload: boolean };
-
-type ResponseData = {
-  token: string;
-  expiration: string;
-};
 
 const reducer = (state: State, action: Action): State => {
   switch (action.type) {
@@ -89,7 +83,6 @@ const reducer = (state: State, action: Action): State => {
 const Login = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const history = useHistory();
-  const [responseData, setResponseData] = useState<ResponseData>();
 
   useEffect(() => {
     if (state.username.trim() && state.password.trim()) {
@@ -105,20 +98,21 @@ const Login = () => {
     }
   }, [state.username, state.password]);
 
-  const handleLogin = async () => {
-    await axios
+  const handleLogin = () => {
+    axios
       .post(LOGIN_ENDPOINT, {
         username: state.username,
         password: state.password,
       })
-      .then((response: AxiosResponse) => {
+      .then((response) => {
         if (response.status === 200) {
-          setResponseData(response.data);
+          const obj = JSON.parse(JSON.stringify(response.data));
+          cookies.set('token', obj.token);
+          console.log(cookies.get('token'));
           history.push('/app/dashboard');
-          cookies.set('token', JSON.stringify(responseData?.token));
         }
       })
-      .catch((error: string) => {
+      .catch((error) => {
         dispatch({
           type: 'loginFailed',
           payload: 'Login error',

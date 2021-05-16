@@ -2,8 +2,11 @@ import React, { useReducer, useEffect } from 'react';
 import { AxiosResponse } from 'axios';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import Cookies from 'universal-cookie';
 import NavMenu from '../NavMenu/NavMenu';
 import './NewBlog.css';
+
+const cookies = new Cookies();
 
 const axios = require('axios').default;
 
@@ -77,17 +80,23 @@ const NewBlog = () => {
 
   const handleCreateBlog = async () => {
     await axios
-      .post(LOGIN_ENDPOINT, {
-        title: state.title,
-        content: state.content,
-      })
+      .post(
+        LOGIN_ENDPOINT,
+        {
+          title: state.title,
+          content: state.content,
+        },
+        {
+          headers: { Authorization: `Bearer ${cookies.get('token')}` },
+        }
+      )
       .then((response: AxiosResponse) => {
         if (response.status === 200) {
-          // successful post
+          // display success
         }
       })
       .catch((error: string) => {
-        // unsuccessful
+        // display error
       });
   };
 
