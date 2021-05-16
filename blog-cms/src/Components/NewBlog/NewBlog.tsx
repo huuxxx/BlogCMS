@@ -10,7 +10,7 @@ const cookies = new Cookies();
 
 const axios = require('axios').default;
 
-const LOGIN_ENDPOINT = 'https://localhost:44358/api/BlogItems/CreateBlog';
+const LOGIN_ENDPOINT = 'http://www.hux-dev/api/BlogItems/CreateBlog';
 
 type State = {
   title: string;

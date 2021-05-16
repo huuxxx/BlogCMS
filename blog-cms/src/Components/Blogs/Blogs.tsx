@@ -4,8 +4,7 @@ import NavMenu from '../NavMenu/NavMenu';
 
 const axios = require('axios').default;
 
-const GET_BLOGS_ENDPOINT =
-  'https://localhost:44358/api/BlogItems/GetBlogLatest';
+const GET_BLOGS_ENDPOINT = 'http://www.hux-dev/api/BlogItems/GetBlogLatest';
 
 type BlogResponseItem = {
   id: number;
