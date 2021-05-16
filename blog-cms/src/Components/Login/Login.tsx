@@ -13,7 +13,7 @@ const cookies = new Cookies();
 
 const axios = require('axios').default;
 
-const LOGIN_ENDPOINT = 'http://www.hux-dev/api/Authenticate/login';
+const LOGIN_ENDPOINT = 'http://www.huxdev/api/Authenticate/login';
 
 type State = {
   username: string;
