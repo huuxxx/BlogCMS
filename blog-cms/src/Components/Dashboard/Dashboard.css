@@ -1,6 +1,5 @@
 .dashboardParent {
   width: 60%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  position: relative;
+  margin-left: 20%;
+  margin-top: 1em;
 }

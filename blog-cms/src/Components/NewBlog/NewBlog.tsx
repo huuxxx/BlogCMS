@@ -1,10 +1,13 @@
-import React, { useReducer, useEffect } from 'react';
+import React, { useReducer, useEffect, useState } from 'react';
 import { AxiosResponse } from 'axios';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Cookies from 'universal-cookie';
+import { Editor } from 'react-draft-wysiwyg';
+import { EditorState } from 'draft-js';
 import NavMenu from '../NavMenu/NavMenu';
 import './NewBlog.css';
+import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
 const cookies = new Cookies();
 
@@ -63,6 +66,10 @@ const reducer = (state: State, action: Action): State => {
 
 const NewBlog = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
+
+  const [editorState, setEditorState] = useState(() =>
+    EditorState.createEmpty()
+  );
 
   useEffect(() => {
     if (state.title.trim() && state.content.trim()) {
@@ -132,14 +139,12 @@ const NewBlog = () => {
           onChange={handleTitleChange}
           autoFocus
         />
-        <TextField
-          error={state.isError}
-          fullWidth
-          id="content"
-          label="Content"
-          margin="normal"
-          onChange={handleContentChange}
-          multiline
+        <Editor
+          editorState={editorState}
+          toolbarClassName="toolbarClassName"
+          wrapperClassName="wrapperClassName"
+          editorClassName="editorClassName"
+          onEditorStateChange={setEditorState}
         />
         <Button
           variant="contained"
