@@ -19,21 +19,18 @@ type State = {
   title: string;
   content: string;
   isButtonDisabled: boolean;
-  isError: boolean;
 };
 
 const initialState: State = {
   title: '',
   content: '',
   isButtonDisabled: true,
-  isError: false,
 };
 
 type Action =
   | { type: 'setTitle'; payload: string }
   | { type: 'setContent'; payload: string }
-  | { type: 'setIsButtonDisabled'; payload: boolean }
-  | { type: 'setIsError'; payload: boolean };
+  | { type: 'setIsButtonDisabled'; payload: boolean };
 
 const reducer = (state: State, action: Action): State => {
   switch (action.type) {
@@ -52,11 +49,6 @@ const reducer = (state: State, action: Action): State => {
         ...state,
         isButtonDisabled: action.payload,
       };
-    case 'setIsError':
-      return {
-        ...state,
-        isError: action.payload,
-      };
     default:
       return {
         ...state,
@@ -67,11 +59,12 @@ const reducer = (state: State, action: Action): State => {
 const NewBlog = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  const [editorState, setEditorState] = useState(() =>
+  const [editorState, setEditorState] = useState<string>(() =>
     EditorState.createEmpty()
   );
 
   useEffect(() => {
+    state.content = editorState;
     if (state.title.trim() && state.content.trim()) {
       dispatch({
         type: 'setIsButtonDisabled',
@@ -83,6 +76,7 @@ const NewBlog = () => {
         payload: true,
       });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state.content, state.title]);
 
   const handleCreateBlog = async () => {
@@ -121,7 +115,7 @@ const NewBlog = () => {
   ) => {
     dispatch({
       type: 'setContent',
-      payload: event.target.value,
+      payload: editorState,
     });
   };
 
@@ -131,12 +125,11 @@ const NewBlog = () => {
       <form className="formParent" noValidate autoComplete="off">
         <h1>New Blog</h1>
         <TextField
-          error={state.isError}
           fullWidth
           id="title"
           label="Title"
           margin="normal"
-          onChange={handleTitleChange}
+          //   onChange={handleTitleChange}
           autoFocus
         />
         <Editor
@@ -145,6 +138,7 @@ const NewBlog = () => {
           wrapperClassName="wrapperClassName"
           editorClassName="editorClassName"
           onEditorStateChange={setEditorState}
+          //   onChange={handleContentChange}
         />
         <Button
           variant="contained"

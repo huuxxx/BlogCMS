@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { AxiosResponse } from 'axios';
 import parse from 'html-react-parser';
+import { compareAsc, format } from 'date-fns';
 import NavMenu from '../NavMenu/NavMenu';
 import './Blogs.css';
 
@@ -14,8 +15,8 @@ type BlogResponseItem = {
   title: string;
   content: string;
   requests: string;
-  datecreated: Date;
-  dateModified: Date;
+  datecreated: string;
+  dateModified: string;
 };
 
 const Blogs = () => {
@@ -38,7 +39,7 @@ const Blogs = () => {
       <div className="blogsParent">
         <h1>Blogs</h1>
         <h3>{responseData?.title}</h3>
-        <span>{responseData?.datecreated}</span>
+        <div>{responseData?.datecreated}</div>
         <span style={{ marginTop: '1em' }}>{responseData?.dateModified}</span>
         <div style={{ marginTop: '1em' }}>
           {parse(responseData?.content ?? '')}
