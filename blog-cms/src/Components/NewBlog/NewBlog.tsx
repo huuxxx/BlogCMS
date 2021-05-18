@@ -10,7 +10,7 @@ const cookies = new Cookies();
 
 const axios = require('axios').default;
 
-const LOGIN_ENDPOINT = 'https://blogapi.huxdev.com/api/BlogItems/CreateBlog';
+const NEW_BLOG_ENDPOINT = 'https://localhost:44358/api/BlogItems/CreateBlog';
 
 type State = {
   title: string;
@@ -81,7 +81,7 @@ const NewBlog = () => {
   const handleCreateBlog = async () => {
     await axios
       .post(
-        LOGIN_ENDPOINT,
+        NEW_BLOG_ENDPOINT,
         {
           title: state.title,
           content: state.content,
@@ -121,26 +121,26 @@ const NewBlog = () => {
   return (
     <div>
       <NavMenu />
-      New Blog
-      <form className="container" noValidate autoComplete="off">
-        <div>
-          <TextField
-            error={state.isError}
-            fullWidth
-            id="title"
-            label="Title"
-            margin="normal"
-            onChange={handleTitleChange}
-          />
-          <TextField
-            error={state.isError}
-            fullWidth
-            id="content"
-            label="Content"
-            margin="normal"
-            onChange={handleContentChange}
-          />
-        </div>
+      <form className="formParent" noValidate autoComplete="off">
+        <h1>New Blog</h1>
+        <TextField
+          error={state.isError}
+          fullWidth
+          id="title"
+          label="Title"
+          margin="normal"
+          onChange={handleTitleChange}
+          autoFocus
+        />
+        <TextField
+          error={state.isError}
+          fullWidth
+          id="content"
+          label="Content"
+          margin="normal"
+          onChange={handleContentChange}
+          multiline
+        />
         <Button
           variant="contained"
           size="large"

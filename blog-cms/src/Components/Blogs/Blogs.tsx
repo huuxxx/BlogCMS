@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { AxiosResponse } from 'axios';
+import parse from 'html-react-parser';
 import NavMenu from '../NavMenu/NavMenu';
+import './Blogs.css';
 
 const axios = require('axios').default;
 
 const GET_BLOGS_ENDPOINT =
-  'https://blogapi.huxdev.com/api/BlogItems/GetBlogLatest';
+  'https://localhost:44358/api/BlogItems/GetBlogLatest';
 
 type BlogResponseItem = {
   id: number;
@@ -33,9 +35,15 @@ const Blogs = () => {
   return (
     <div>
       <NavMenu />
-      Blogs page
-      <div>{responseData?.title}</div>
-      <div>{responseData?.content}</div>
+      <div className="blogsParent">
+        <h1>Blogs</h1>
+        <h3>{responseData?.title}</h3>
+        <span>{responseData?.datecreated}</span>
+        <span style={{ marginTop: '1em' }}>{responseData?.dateModified}</span>
+        <div style={{ marginTop: '1em' }}>
+          {parse(responseData?.content ?? '')}
+        </div>
+      </div>
     </div>
   );
 };
