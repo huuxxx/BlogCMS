@@ -5,6 +5,7 @@ import Button from '@material-ui/core/Button';
 import Cookies from 'universal-cookie';
 import { Editor } from 'react-draft-wysiwyg';
 import { EditorState } from 'draft-js';
+import { convertToHTML } from 'draft-convert';
 import NavMenu from '../NavMenu/NavMenu';
 import './NewBlog.css';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
@@ -17,19 +18,16 @@ const NEW_BLOG_ENDPOINT = 'https://localhost:44358/api/BlogItems/CreateBlog';
 
 type State = {
   title: string;
-  content: string;
   isButtonDisabled: boolean;
 };
 
 const initialState: State = {
   title: '',
-  content: '',
   isButtonDisabled: true,
 };
 
 type Action =
   | { type: 'setTitle'; payload: string }
-  | { type: 'setContent'; payload: string }
   | { type: 'setIsButtonDisabled'; payload: boolean };
 
 const reducer = (state: State, action: Action): State => {
@@ -38,11 +36,6 @@ const reducer = (state: State, action: Action): State => {
       return {
         ...state,
         title: action.payload,
-      };
-    case 'setContent':
-      return {
-        ...state,
-        content: action.payload,
       };
     case 'setIsButtonDisabled':
       return {
@@ -59,13 +52,12 @@ const reducer = (state: State, action: Action): State => {
 const NewBlog = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  const [editorState, setEditorState] = useState<string>(() =>
+  const [editorState, setEditorState] = useState(() =>
     EditorState.createEmpty()
   );
 
   useEffect(() => {
-    state.content = editorState;
-    if (state.title.trim() && state.content.trim()) {
+    if (state.title.trim()) {
       dispatch({
         type: 'setIsButtonDisabled',
         payload: false,
@@ -77,15 +69,16 @@ const NewBlog = () => {
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [state.content, state.title]);
+  }, [state.title]);
 
-  const handleCreateBlog = async () => {
-    await axios
+  const handleCreateBlog = () => {
+    const contentToHtml = convertToHTML(editorState.getCurrentContent());
+    axios
       .post(
         NEW_BLOG_ENDPOINT,
         {
           title: state.title,
-          content: state.content,
+          content: contentToHtml,
         },
         {
           headers: { Authorization: `Bearer ${cookies.get('token')}` },
@@ -110,15 +103,6 @@ const NewBlog = () => {
     });
   };
 
-  const handleContentChange: React.ChangeEventHandler<HTMLInputElement> = (
-    event
-  ) => {
-    dispatch({
-      type: 'setContent',
-      payload: editorState,
-    });
-  };
-
   return (
     <div>
       <NavMenu />
@@ -129,7 +113,7 @@ const NewBlog = () => {
           id="title"
           label="Title"
           margin="normal"
-          //   onChange={handleTitleChange}
+          onChange={handleTitleChange}
           autoFocus
         />
         <Editor
@@ -138,7 +122,6 @@ const NewBlog = () => {
           wrapperClassName="wrapperClassName"
           editorClassName="editorClassName"
           onEditorStateChange={setEditorState}
-          //   onChange={handleContentChange}
         />
         <Button
           variant="contained"
@@ -146,7 +129,6 @@ const NewBlog = () => {
           color="secondary"
           className="submitBtn"
           onClick={handleCreateBlog}
-          disabled={state.isButtonDisabled}
         >
           Upload
         </Button>
