@@ -13,7 +13,8 @@ const cookies = new Cookies();
 
 const axios = require('axios').default;
 
-const LOGIN_ENDPOINT = 'https://blogapi.huxdev.com/api/Authenticate/login';
+// const LOGIN_ENDPOINT = 'https://blogapi.huxdev.com/api/Authenticate/login';
+const LOGIN_ENDPOINT = 'https://localhost:44358/api/Authenticate/login';
 
 type State = {
   username: string;

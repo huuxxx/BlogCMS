@@ -14,7 +14,8 @@ const cookies = new Cookies();
 
 const axios = require('axios').default;
 
-const NEW_BLOG_ENDPOINT = 'https://blogapi.huxdev.com/api/BlogItems/CreateBlog';
+// const NEW_BLOG_ENDPOINT = 'https://blogapi.huxdev.com/api/Blog/CreateBlog';
+const NEW_BLOG_ENDPOINT = 'https://localhost:44358/api/Blog/CreateBlog';
 
 type State = {
   title: string;
