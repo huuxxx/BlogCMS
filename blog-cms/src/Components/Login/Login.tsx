@@ -1,4 +1,4 @@
-import React, { useReducer, useEffect, useState } from 'react';
+import React, { useReducer, useState } from 'react';
 import TextField from '@material-ui/core/TextField';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -9,9 +9,9 @@ import { useHistory } from 'react-router-dom';
 import './Login.css';
 import Cookies from 'universal-cookie';
 import { CircularProgress } from '@material-ui/core';
+import { useGlobalContext } from '../../Store';
 
 const cookies = new Cookies();
-
 const axios = require('axios').default;
 
 const LOGIN_ENDPOINT = 'https://blogapi.huxdev.com/api/Authenticate/login';
@@ -86,20 +86,7 @@ const Login = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const history = useHistory();
   const [loading, setLoading] = useState(false);
-
-  useEffect(() => {
-    if (state.username.trim() && state.password.trim()) {
-      dispatch({
-        type: 'setIsButtonDisabled',
-        payload: false,
-      });
-    } else {
-      dispatch({
-        type: 'setIsButtonDisabled',
-        payload: true,
-      });
-    }
-  }, [state.username, state.password]);
+  const { setIsLoggedIn } = useGlobalContext();
 
   const handleLogin = () => {
     setLoading(true);
@@ -110,12 +97,13 @@ const Login = () => {
       })
       .then((response) => {
         if (response.status === 200) {
+          setIsLoggedIn(true);
           const obj = JSON.parse(JSON.stringify(response.data));
           cookies.set('token', obj.token);
           history.push('/app/dashboard');
         }
       })
-      .catch((error) => {
+      .catch(() => {
         setLoading(false);
         dispatch({
           type: 'loginFailed',
@@ -183,20 +171,16 @@ const Login = () => {
             <Button
               variant="contained"
               size="large"
-              color="secondary"
+              color="primary"
               className="loginBtn"
               onClick={handleLogin}
-              disabled={state.isButtonDisabled}
+              //   disabled={state.isButtonDisabled}
             >
               Login
             </Button>
           </CardActions>
           <div className="loadingSpinner">
-            {loading ? (
-              <CircularProgress style={{ position: 'relative', left: '45%' }} />
-            ) : (
-              ''
-            )}
+            {loading ? <CircularProgress /> : ''}
           </div>
         </Card>
       </form>

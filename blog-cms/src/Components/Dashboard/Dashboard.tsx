@@ -8,9 +8,10 @@ import './Dashboard.css';
 
 const axios = require('axios').default;
 
-// const GET_ANALYTICS_ENDPOINT = 'https://blogapi.huxdev.com/api/Analytics/GetAnalytics';
 const GET_ANALYTICS_ENDPOINT =
-  'https://localhost:44358/api/Analytics/GetAnalytics';
+  'https://blogapi.huxdev.com/api/Analytics/GetAnalytics';
+// const GET_ANALYTICS_ENDPOINT =
+//   'https://localhost:44358/api/Analytics/GetAnalytics';
 
 type AnalyticsResponseItem = {
   totalVisits: number;
@@ -25,7 +26,6 @@ const Dashboard = () => {
       .then((response: AxiosResponse) => {
         if (response.status === 200) {
           setResponseData(response.data);
-          console.log(response.data);
         }
       })
       .catch((error: string) => {});
