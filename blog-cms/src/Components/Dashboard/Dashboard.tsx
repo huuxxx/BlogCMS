@@ -25,7 +25,6 @@ const Dashboard = () => {
       .then((response: AxiosResponse) => {
         if (response.status === 200) {
           setResponseData(response.data);
-          console.log(response.data);
         }
       })
       .catch((error: string) => {});
