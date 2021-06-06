@@ -6,6 +6,7 @@ import Cookies from 'universal-cookie';
 import { Editor } from 'react-draft-wysiwyg';
 import { EditorState } from 'draft-js';
 import { convertToHTML } from 'draft-convert';
+import { CircularProgress } from '@material-ui/core';
 import NavMenu from '../NavMenu/NavMenu';
 import './NewBlog.css';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
@@ -14,8 +15,8 @@ const cookies = new Cookies();
 
 const axios = require('axios').default;
 
-const NEW_BLOG_ENDPOINT = 'https://blogapi.huxdev.com/api/Blog/CreateBlog';
-// const NEW_BLOG_ENDPOINT = 'https://localhost:44358/api/Blog/CreateBlog';
+// const NEW_BLOG_ENDPOINT = 'https://blogapi.huxdev.com/api/Blog/CreateBlog';
+const NEW_BLOG_ENDPOINT = 'https://localhost:44358/api/Blog/CreateBlog';
 
 type State = {
   title: string;
@@ -52,6 +53,8 @@ const reducer = (state: State, action: Action): State => {
 
 const NewBlog = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
+  const [loading, setLoading] = useState(false);
+  const [successfulUpload, setSuccessfulUpload] = useState('');
 
   const [editorState, setEditorState] = useState(() =>
     EditorState.createEmpty()
@@ -73,6 +76,7 @@ const NewBlog = () => {
   }, [state.title]);
 
   const handleCreateBlog = () => {
+    setLoading(true);
     const contentToHtml = convertToHTML(editorState.getCurrentContent());
     axios
       .post(
@@ -87,11 +91,13 @@ const NewBlog = () => {
       )
       .then((response: AxiosResponse) => {
         if (response.status === 200) {
-          // display success
+          setLoading(false);
+          setSuccessfulUpload('Successfully Published!');
         }
       })
       .catch((error: string) => {
-        // display error
+        setLoading(false);
+        setSuccessfulUpload('Failed To Publish!');
       });
   };
 
@@ -134,6 +140,10 @@ const NewBlog = () => {
           Upload
         </Button>
       </form>
+      <div className="uploadStatus">{successfulUpload}</div>
+      <div className="loadingSpinner">
+        {loading ? <CircularProgress /> : ''}
+      </div>
     </div>
   );
 };
