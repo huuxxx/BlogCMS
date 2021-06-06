@@ -3,3 +3,14 @@
   margin-left: 20%;
   margin-top: 1em;
 }
+
+.uploadStatus {
+  font-family: 'Courier New', Courier, monospace;
+  display: flex;
+  justify-content: center;
+}
+
+.loadingSpinner {
+  display: flex;
+  justify-content: center;
+}

@@ -8,6 +8,11 @@
   position: relative;
 }
 
+.loadSpinner {
+  justify-content: center;
+  position: relative;
+}
+
 .loginBtn {
   margin-top: 16px;
   flex-grow: 1;
