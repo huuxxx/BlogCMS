@@ -109,7 +109,6 @@ const Login = () => {
         if (response.status === 200) {
           const obj = JSON.parse(JSON.stringify(response.data));
           cookies.set('token', obj.token);
-          console.log(cookies.get('token'));
           history.push('/app/dashboard');
         }
       })
