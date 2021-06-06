@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { AxiosResponse } from 'axios';
 import parse from 'html-react-parser';
-import { compareAsc, format } from 'date-fns';
 import NavMenu from '../NavMenu/NavMenu';
 import './Blogs.css';
 
 const axios = require('axios').default;
 
-// const GET_BLOGS_ENDPOINT = 'https://blogapi.huxdev.com/api/Blog/GetBlogLatest';
-const GET_BLOGS_ENDPOINT = 'https://localhost:44358/api/Blog/GetBlogLatest';
+const GET_BLOGS_ENDPOINT = 'https://blogapi.huxdev.com/api/Blog/GetBlogLatest';
+// const GET_BLOGS_ENDPOINT = 'https://localhost:44358/api/Blog/GetBlogLatest';
 
 type BlogResponseItem = {
   id: number;
