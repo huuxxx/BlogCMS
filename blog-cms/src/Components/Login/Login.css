@@ -8,9 +8,9 @@
   position: relative;
 }
 
-.loadSpinner {
+.loadingSpinner {
+  display: flex;
   justify-content: center;
-  position: relative;
 }
 
 .loginBtn {

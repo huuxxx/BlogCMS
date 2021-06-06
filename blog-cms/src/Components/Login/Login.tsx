@@ -191,11 +191,13 @@ const Login = () => {
               Login
             </Button>
           </CardActions>
-          {loading ? (
-            <CircularProgress style={{ position: 'relative', left: '45%' }} />
-          ) : (
-            ''
-          )}
+          <div className="loadingSpinner">
+            {loading ? (
+              <CircularProgress style={{ position: 'relative', left: '45%' }} />
+            ) : (
+              ''
+            )}
+          </div>
         </Card>
       </form>
     </div>
