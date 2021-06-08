@@ -1,25 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import { AxiosResponse } from 'axios';
-import parse from 'html-react-parser';
 import NavMenu from '../NavMenu/NavMenu';
 import './Blogs.css';
 
 const axios = require('axios').default;
 
-const GET_BLOGS_ENDPOINT = 'https://blogapi.huxdev.com/api/Blog/GetBlogLatest';
-// const GET_BLOGS_ENDPOINT = 'https://localhost:44358/api/Blog/GetBlogLatest';
+const GET_BLOGS_ENDPOINT = 'https://blogapi.huxdev.com/api/Blog/GetAllBlogs';
+// const GET_BLOGS_ENDPOINT = 'https://localhost:44358/api/Blog/GetAllBlogs';
 
 type BlogResponseItem = {
   id: number;
   title: string;
-  content: string;
-  requests: string;
-  datecreated: string;
-  dateModified: string;
+  dateCreated: string;
 };
 
 const Blogs = () => {
-  const [responseData, setResponseData] = useState<BlogResponseItem>();
+  const [responseData, setResponseData] = useState<BlogResponseItem[]>();
 
   useEffect(() => {
     axios
@@ -35,15 +31,17 @@ const Blogs = () => {
   return (
     <div>
       <NavMenu />
-      <div className="blogsParent">
-        <h1>Blogs</h1>
-        <h3>{responseData?.title}</h3>
-        <div>{responseData?.datecreated}</div>
-        <span style={{ marginTop: '1em' }}>{responseData?.dateModified}</span>
-        <div style={{ marginTop: '1em' }}>
-          {parse(responseData?.content ?? '')}
+
+      {responseData?.map((item) => (
+        <div
+          key={item.id.toString()}
+          className="blogsParent"
+          style={{ marginBottom: '3em' }}
+        >
+          <h3>{item.title}</h3>
+          <span>{item.dateCreated.split(' ')[0]}</span>
         </div>
-      </div>
+      ))}
     </div>
   );
 };
