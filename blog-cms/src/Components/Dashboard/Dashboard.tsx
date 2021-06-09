@@ -1,17 +1,15 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
 import { AxiosResponse } from 'axios';
-import parse from 'html-react-parser';
-import { compareAsc, format } from 'date-fns';
 import NavMenu from '../NavMenu/NavMenu';
 import './Dashboard.css';
 
 const axios = require('axios').default;
 
-const GET_ANALYTICS_ENDPOINT =
-  'https://blogapi.huxdev.com/api/Analytics/GetAnalytics';
 // const GET_ANALYTICS_ENDPOINT =
-//   'https://localhost:44358/api/Analytics/GetAnalytics';
+//   'https://blogapi.huxdev.com/api/Analytics/GetAnalytics';
+const GET_ANALYTICS_ENDPOINT =
+  'https://localhost:44358/api/Analytics/GetAnalytics';
 
 type AnalyticsResponseItem = {
   totalVisits: number;

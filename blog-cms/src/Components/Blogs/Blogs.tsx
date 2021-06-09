@@ -5,8 +5,8 @@ import './Blogs.css';
 
 const axios = require('axios').default;
 
-const GET_BLOGS_ENDPOINT = 'https://blogapi.huxdev.com/api/Blog/GetAllBlogs';
-// const GET_BLOGS_ENDPOINT = 'https://localhost:44358/api/Blog/GetAllBlogs';
+// const GET_BLOGS_ENDPOINT = 'https://blogapi.huxdev.com/api/Blog/GetAllBlogs';
+const GET_BLOGS_ENDPOINT = 'https://localhost:44358/api/Blog/GetAllBlogs';
 
 type BlogResponseItem = {
   id: number;
