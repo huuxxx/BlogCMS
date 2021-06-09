@@ -9,10 +9,13 @@ import { Store } from './Store';
 
 export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+  const [userName, setUserName] = useState<string>('');
   return (
     <Router>
       <div>
-        <Store.Provider value={{ isLoggedIn, setIsLoggedIn }}>
+        <Store.Provider
+          value={{ isLoggedIn, setIsLoggedIn, userName, setUserName }}
+        >
           <Route path="/" exact component={Login} />
           <Switch>
             <PrivateRoute path="/app/newblog" exact component={NewBlog} />

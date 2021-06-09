@@ -55,6 +55,7 @@ const NewBlog = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const [loading, setLoading] = useState(false);
   const [successfulUpload, setSuccessfulUpload] = useState('');
+  const [uploadDisabled, setUploadDisable] = useState(false);
 
   const [editorState, setEditorState] = useState(() =>
     EditorState.createEmpty()
@@ -77,6 +78,7 @@ const NewBlog = () => {
 
   const handleCreateBlog = () => {
     setLoading(true);
+    setUploadDisable(true);
     const contentToHtml = convertToHTML(editorState.getCurrentContent());
     axios
       .post(
@@ -92,12 +94,13 @@ const NewBlog = () => {
       .then((response: AxiosResponse) => {
         if (response.status === 200) {
           setLoading(false);
-          setSuccessfulUpload('Successfully Published!');
+          setSuccessfulUpload('Successfully Uploaded!');
         }
       })
       .catch((error: string) => {
         setLoading(false);
-        setSuccessfulUpload('Failed To Publish!');
+        setUploadDisable(false);
+        setSuccessfulUpload('Failed To Upload!');
       });
   };
 
@@ -133,9 +136,10 @@ const NewBlog = () => {
         <Button
           variant="contained"
           size="large"
-          color="secondary"
+          color="primary"
           className="submitBtn"
           onClick={handleCreateBlog}
+          disabled={uploadDisabled}
         >
           Upload
         </Button>

@@ -87,6 +87,7 @@ const Login = () => {
   const history = useHistory();
   const [loading, setLoading] = useState(false);
   const { setIsLoggedIn } = useGlobalContext();
+  const { setUserName } = useGlobalContext();
 
   const handleLogin = () => {
     setLoading(true);
@@ -98,6 +99,7 @@ const Login = () => {
       .then((response) => {
         if (response.status === 200) {
           setIsLoggedIn(true);
+          setUserName(state.username);
           const obj = JSON.parse(JSON.stringify(response.data));
           cookies.set('token', obj.token);
           history.push('/app/dashboard');
@@ -174,7 +176,7 @@ const Login = () => {
               color="primary"
               className="loginBtn"
               onClick={handleLogin}
-              //   disabled={state.isButtonDisabled}
+              disabled={loading}
             >
               Login
             </Button>
