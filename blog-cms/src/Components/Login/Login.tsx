@@ -116,7 +116,7 @@ const Login = () => {
 
   const handleKeyPress = (event: React.KeyboardEvent) => {
     if (event.key === 'Enter') {
-      state.isButtonDisabled || handleLogin();
+      handleLogin();
     }
   };
 
