@@ -1,12 +1,17 @@
 import React from 'react';
-import { Route, Redirect } from 'react-router-dom';
+import { Route, Redirect, RouteComponentProps } from 'react-router-dom';
 import { useGlobalContext } from '../../Store';
 
-const PrivateRoute: React.FC<{
+type RouteParams = {
   component: React.FC;
   path: string;
-  exact: boolean;
-}> = (props) => {
+  exact?: boolean;
+};
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const PrivateRoute: React.FC<RouteParams & RouteComponentProps<any>> = (
+  props
+) => {
   const { isLoggedIn } = useGlobalContext();
 
   return isLoggedIn ? (
@@ -15,4 +20,5 @@ const PrivateRoute: React.FC<{
     <Redirect to="/" />
   );
 };
-export default PrivateRoute;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export default PrivateRoute as React.ComponentType<any>;

@@ -35,7 +35,7 @@ const NavMenu = () => {
       <Button
         variant="contained"
         size="small"
-        color="secondary"
+        color="inherit"
         className="loginBtn"
         onClick={logOut}
       >
