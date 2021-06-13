@@ -2,16 +2,19 @@ import React from 'react';
 import { VictoryChart, VictoryBar } from 'victory';
 
 const data = [
-  { quarter: 1, earnings: 13000 },
-  { quarter: 2, earnings: 16500 },
-  { quarter: 3, earnings: 14250 },
-  { quarter: 4, earnings: 19000 },
+  { dayOfWeek: 'Sunday', visitors: 10 },
+  { dayOfWeek: 'Monday', visitors: 3 },
+  { dayOfWeek: 'Tueday', visitors: 5 },
+  { dayOfWeek: 'Wednesday', visitors: 6 },
+  { dayOfWeek: 'Thursday', visitors: 2 },
+  { dayOfWeek: 'Friday', visitors: 8 },
+  { dayOfWeek: 'Saturday', visitors: 4 },
 ];
 
 const VisitorChart = () => (
   <div>
     <VictoryChart>
-      <VictoryBar data={data} x="quarter" y="earnings" />
+      <VictoryBar data={data} x="dayOfWeek" y="visitors" />
     </VictoryChart>
   </div>
 );
