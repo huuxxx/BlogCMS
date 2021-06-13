@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { AxiosResponse } from 'axios';
+import { Link } from 'react-router-dom';
 import NavMenu from '../NavMenu/NavMenu';
 import './Blogs.css';
 
 const axios = require('axios').default;
 
-const GET_BLOGS_ENDPOINT = 'https://blogapi.huxdev.com/api/Blog/GetAllBlogs';
-// const GET_BLOGS_ENDPOINT = 'https://localhost:44358/api/Blog/GetAllBlogs';
+// const GET_BLOGS_ENDPOINT = 'https://blogapi.huxdev.com/api/Blog/GetAllBlogs';
+const GET_BLOGS_ENDPOINT = 'https://localhost:44358/api/Blog/GetAllBlogs';
 
 type BlogResponseItem = {
   id: number;
@@ -38,7 +39,9 @@ const Blogs = () => {
           className="blogsParent"
           style={{ marginBottom: '3em' }}
         >
-          <h3>{item.title}</h3>
+          <Link to={`editblog/${item.id}`}>
+            <h3>{item.title}</h3>
+          </Link>
           <span>{item.dateCreated.split(' ')[0]}</span>
         </div>
       ))}

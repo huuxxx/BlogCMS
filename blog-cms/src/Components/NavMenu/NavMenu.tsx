@@ -1,7 +1,10 @@
 import React from 'react';
 import { Link as Route, Redirect } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
+import Cookies from 'universal-cookie';
 import { useGlobalContext } from '../../Store';
+
+const cookies = new Cookies();
 
 const NavMenu = () => {
   const { userName } = useGlobalContext();
@@ -9,6 +12,7 @@ const NavMenu = () => {
 
   const logOut = () => {
     setIsLoggedIn(false);
+    cookies.remove('token');
     <Redirect to="/" />;
   };
 
@@ -31,7 +35,7 @@ const NavMenu = () => {
       <Button
         variant="contained"
         size="small"
-        color="secondary"
+        color="inherit"
         className="loginBtn"
         onClick={logOut}
       >
