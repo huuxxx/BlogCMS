@@ -24,7 +24,7 @@ type VisitorItem = {
 };
 
 // const ShowVisitors: React.FC<IProps> = ({ numberOfRecords }) => {
-const ShowVisitors: React.FC = () => {
+const VisitorsChart: React.FC = () => {
   //   const [responseData, setResponsedata] = useState<VisitorItem[]>();
 
   const data = useMemo(
@@ -155,4 +155,4 @@ const ShowVisitors: React.FC = () => {
   );
 };
 
-export default ShowVisitors;
+export default VisitorsChart;

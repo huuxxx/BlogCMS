@@ -1,7 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
 import { AxiosResponse } from 'axios';
-import ShowVisitors from '../Analytics/ShowVisitors';
+import VisitorsTable from '../Analytics/VisitorsTable';
+import VisitorChart from '../Analytics/VisitorChart';
 import NavMenu from '../NavMenu/NavMenu';
 import './Dashboard.css';
 
@@ -36,7 +37,8 @@ const Dashboard = () => {
       <div className="dashboardParent">
         <h1>Dashboard</h1>
         <span>Total page visits: {responseData?.totalVisits}</span>
-        <ShowVisitors />
+        <VisitorChart />
+        <VisitorsTable />
       </div>
     </div>
   );

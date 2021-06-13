@@ -25,6 +25,7 @@
     "react-table": "^7.7.0",
     "typescript": "^4.2.4",
     "universal-cookie": "^4.0.4",
+    "victory": "^35.8.6",
     "web-vitals": "^1.1.1"
   },
   "scripts": {
