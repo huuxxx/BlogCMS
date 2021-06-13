@@ -22,23 +22,34 @@ const GET_BLOG_ENDPOINT = 'https://localhost:44358/api/Blog/GetBlog';
 // const DELETE_BLOG_ENDPOINT = 'https://blogapi.huxdev.com/api/Blog/DeleteBlog';
 const DELETE_BLOG_ENDPOINT = 'https://localhost:44358/api/Blog/DeleteBlog';
 
-// type BlogItem = {
-//   Id: number;
-//   Title: string;
-//   Content: string;
-//   Requests: number;
-//   DateCreated: string;
-//   DateModified: string;
-// };
+type BlogItem = {
+  Id: number;
+  Title: string;
+  Content: string;
+  Requests: number;
+  DateCreated: string;
+  DateModified: string;
+};
+
+const initialState: BlogItem = {
+  Id: 0,
+  Title: '',
+  Content: '',
+  Requests: 0,
+  DateCreated: '',
+  DateModified: '',
+};
 
 const BlogEdit = ({ match }) => {
   const [loading, setLoading] = useState(false);
   const [successfulUpload, setSuccessfulUpload] = useState('');
   const [buttonState, setButtonState] = useState(false);
   const [titleState, setTitleState] = useState('');
-  const [editorState, setContentState] = useState(() =>
-    EditorState.createEmpty()
-  );
+  const [blogItem, setBlogItem] = useState<BlogItem>(initialState);
+  //   const [contentState, setContentState] = useState(() =>
+  //     EditorState.createEmpty()
+  //   );
+  const [contentState, setContentState] = useState('');
 
   useEffect(() => {
     axios
@@ -47,13 +58,11 @@ const BlogEdit = ({ match }) => {
         id: match.params.id,
       })
       .then((response: AxiosResponse) => {
-        if (response !== null) {
-          //   console.log(match.params.id);
-          console.log(response);
-          console.log(response.data.content);
+        if (response.status === 200) {
+          setTitleState(response.data.title);
           const content = convertFromHtml(response.data.content);
           console.log(content);
-          //   setContentState(response.data.content);
+          //   setContentState(content);
         }
       })
       .catch((error: string) => {});
@@ -63,7 +72,8 @@ const BlogEdit = ({ match }) => {
   const handleEditBlog = () => {
     setLoading(true);
     setButtonState(true);
-    const contentToHtml = convertToHTML(editorState.getCurrentContent());
+    // const contentToHtml = convertToHTML(contentState.getCurrentContent());
+    const contentToHtml = convertToHTML(contentState);
     axios
       .post(
         EDIT_BLOG_ENDPOINT,
@@ -130,11 +140,14 @@ const BlogEdit = ({ match }) => {
           id="title"
           label="Title"
           margin="normal"
+          value={titleState}
           onChange={handleTitleChange}
           autoFocus
         />
         <Editor
-          editorState={editorState}
+          initialContentState={contentState}
+          editorState={contentState}
+          value={contentState}
           toolbarClassName="toolbarClassName"
           wrapperClassName="wrapperClassName"
           editorClassName="editorClassName"
