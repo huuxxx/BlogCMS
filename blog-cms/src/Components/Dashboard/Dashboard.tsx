@@ -8,10 +8,7 @@ import './Dashboard.css';
 
 const axios = require('axios').default;
 
-// const GET_ANALYTICS_ENDPOINT =
-//   'https://blogapi.huxdev.com/api/Analytics/GetAnalytics';
-const GET_ANALYTICS_ENDPOINT =
-  'https://localhost:44358/api/Analytics/GetAnalytics';
+const GET_ANALYTICS_ENDPOINT = process.env.REACT_APP_ENDPOINT_GET_ANALYTICS;
 
 type AnalyticsResponseItem = {
   totalVisits: number;
