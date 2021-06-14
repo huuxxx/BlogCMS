@@ -8,7 +8,7 @@ const data = [
   { dayOfWeek: 'Wednesday', visitors: 6 },
   { dayOfWeek: 'Thursday', visitors: 2 },
   { dayOfWeek: 'Friday', visitors: 8 },
-  { dayOfWeek: 'Saturday', visitors: 4 },
+  { dayOfWeek: 'Saturday', visitors: 5 },
 ];
 
 const VisitorChart = () => (
