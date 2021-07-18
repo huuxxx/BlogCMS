@@ -144,6 +144,7 @@ const Login = () => {
           <CardContent>
             <div>
               <TextField
+                spellCheck={false}
                 error={state.isError}
                 fullWidth
                 id="username"
@@ -155,6 +156,7 @@ const Login = () => {
                 onKeyPress={handleKeyPress}
               />
               <TextField
+                spellCheck={false}
                 error={state.isError}
                 fullWidth
                 id="password"

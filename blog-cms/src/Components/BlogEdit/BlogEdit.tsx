@@ -19,30 +19,11 @@ const DELETE_BLOG_ENDPOINT = process.env.REACT_APP_ENDPOINT_BLOG_DELETE;
 const EDIT_BLOG_ENDPOINT = process.env.REACT_APP_ENDPOINT_BLOG_EDIT;
 const GET_BLOG_ENDPOINT = process.env.REACT_APP_ENDPOINT_BLOG_GET;
 
-type BlogItem = {
-  Id: number;
-  Title: string;
-  Content: string;
-  Requests: number;
-  DateCreated: string;
-  DateModified: string;
-};
-
-const initialState: BlogItem = {
-  Id: 0,
-  Title: '',
-  Content: '',
-  Requests: 0,
-  DateCreated: '',
-  DateModified: '',
-};
-
 const BlogEdit = ({ match }) => {
   const [loading, setLoading] = useState(false);
-  const [successfulUpload, setSuccessfulUpload] = useState('');
+  const [responseState, setResponseState] = useState('');
   const [buttonState, setButtonState] = useState(false);
   const [titleState, setTitleState] = useState('');
-  const [blogItem, setBlogItem] = useState<BlogItem>(initialState);
   const [contentState, setContentState] = useState('');
 
   useEffect(() => {
@@ -80,13 +61,13 @@ const BlogEdit = ({ match }) => {
       .then((response: AxiosResponse) => {
         if (response.status === 200) {
           setLoading(false);
-          setSuccessfulUpload('Successfully Updated!');
+          setResponseState('Successfully Updated!');
         }
       })
       .catch((error: string) => {
         setLoading(false);
         setButtonState(false);
-        setSuccessfulUpload('Failed To Update!');
+        setResponseState('Failed To Update!');
       });
   };
 
@@ -106,13 +87,13 @@ const BlogEdit = ({ match }) => {
       .then((response: AxiosResponse) => {
         if (response.status === 200) {
           setLoading(false);
-          setSuccessfulUpload('Blog Deleted!');
+          setResponseState('Blog Deleted!');
         }
       })
       .catch((error: string) => {
         setLoading(false);
         setButtonState(false);
-        setSuccessfulUpload('Failed To Delete!');
+        setResponseState('Failed To Delete!');
       });
   };
 
@@ -166,7 +147,7 @@ const BlogEdit = ({ match }) => {
           Delete
         </Button>
       </form>
-      <div className="uploadStatus">{successfulUpload}</div>
+      <div className="uploadStatus">{responseState}</div>
       <div className="loadingSpinner">
         {loading ? <CircularProgress /> : ''}
       </div>
