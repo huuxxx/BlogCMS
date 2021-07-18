@@ -4,7 +4,7 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Cookies from 'universal-cookie';
 import { Editor } from 'react-draft-wysiwyg';
-import { EditorState, convertFromHtml, ContentState } from 'draft-js';
+import { EditorState, ContentState } from 'draft-js';
 import { convertToHTML } from 'draft-convert';
 import { CircularProgress } from '@material-ui/core';
 import NavMenu from '../NavMenu/NavMenu';
@@ -36,9 +36,7 @@ const BlogEdit = ({ match }) => {
       })
       .then((response: AxiosResponse) => {
         if (response.status === 200) {
-          console.log(response.data.content);
           setTitleState(response.data.title);
-          //   const content = convertFromHtml(response.data.content);
           setEditorState(
             EditorState.createWithContent(
               ContentState.createFromText(response.data.content)
