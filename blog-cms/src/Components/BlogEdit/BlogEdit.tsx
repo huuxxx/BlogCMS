@@ -15,12 +15,9 @@ const cookies = new Cookies();
 
 const axios = require('axios').default;
 
-// const EDIT_BLOG_ENDPOINT = 'https://blogapi.huxdev.com/api/Blog/EditBlog';
-const EDIT_BLOG_ENDPOINT = 'https://localhost:44358/api/Blog/EditBlog/';
-// const GET_BLOG_ENDPOINT = 'https://blogapi.huxdev.com/api/Blog/GetBlog';
-const GET_BLOG_ENDPOINT = 'https://localhost:44358/api/Blog/GetBlog';
-// const DELETE_BLOG_ENDPOINT = 'https://blogapi.huxdev.com/api/Blog/DeleteBlog';
-const DELETE_BLOG_ENDPOINT = 'https://localhost:44358/api/Blog/DeleteBlog';
+const DELETE_BLOG_ENDPOINT = process.env.REACT_APP_ENDPOINT_BLOG_DELETE;
+const EDIT_BLOG_ENDPOINT = process.env.REACT_APP_ENDPOINT_BLOG_EDIT;
+const GET_BLOG_ENDPOINT = process.env.REACT_APP_ENDPOINT_BLOG_GET;
 
 type BlogItem = {
   Id: number;
@@ -46,9 +43,6 @@ const BlogEdit = ({ match }) => {
   const [buttonState, setButtonState] = useState(false);
   const [titleState, setTitleState] = useState('');
   const [blogItem, setBlogItem] = useState<BlogItem>(initialState);
-  //   const [contentState, setContentState] = useState(() =>
-  //     EditorState.createEmpty()
-  //   );
   const [contentState, setContentState] = useState('');
 
   useEffect(() => {
@@ -60,9 +54,7 @@ const BlogEdit = ({ match }) => {
       .then((response: AxiosResponse) => {
         if (response.status === 200) {
           setTitleState(response.data.title);
-          const content = convertFromHtml(response.data.content);
-          console.log(content);
-          //   setContentState(content);
+          setContentState(convertFromHtml(response.data.content));
         }
       })
       .catch((error: string) => {});
@@ -72,12 +64,12 @@ const BlogEdit = ({ match }) => {
   const handleEditBlog = () => {
     setLoading(true);
     setButtonState(true);
-    // const contentToHtml = convertToHTML(contentState.getCurrentContent());
     const contentToHtml = convertToHTML(contentState);
     axios
       .post(
         EDIT_BLOG_ENDPOINT,
         {
+          id: match.params.id,
           title: titleState,
           content: contentToHtml,
         },
@@ -88,13 +80,13 @@ const BlogEdit = ({ match }) => {
       .then((response: AxiosResponse) => {
         if (response.status === 200) {
           setLoading(false);
-          setSuccessfulUpload('Successfully Uploaded!');
+          setSuccessfulUpload('Successfully Updated!');
         }
       })
       .catch((error: string) => {
         setLoading(false);
         setButtonState(false);
-        setSuccessfulUpload('Failed To Upload!');
+        setSuccessfulUpload('Failed To Update!');
       });
   };
 
@@ -105,7 +97,7 @@ const BlogEdit = ({ match }) => {
       .post(
         DELETE_BLOG_ENDPOINT,
         {
-          id: 1,
+          id: match.params.id,
         },
         {
           headers: { Authorization: `Bearer ${cookies.get('token')}` },
@@ -114,13 +106,13 @@ const BlogEdit = ({ match }) => {
       .then((response: AxiosResponse) => {
         if (response.status === 200) {
           setLoading(false);
-          setSuccessfulUpload('Successfully Uploaded!');
+          setSuccessfulUpload('Blog Deleted!');
         }
       })
       .catch((error: string) => {
         setLoading(false);
         setButtonState(false);
-        setSuccessfulUpload('Failed To Upload!');
+        setSuccessfulUpload('Failed To Delete!');
       });
   };
 
