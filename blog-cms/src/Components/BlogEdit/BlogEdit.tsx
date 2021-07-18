@@ -4,7 +4,7 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Cookies from 'universal-cookie';
 import { Editor } from 'react-draft-wysiwyg';
-import { EditorState, convertFromHtml } from 'draft-js';
+import { EditorState, ContentState } from 'draft-js';
 import { convertToHTML } from 'draft-convert';
 import { CircularProgress } from '@material-ui/core';
 import NavMenu from '../NavMenu/NavMenu';
@@ -15,41 +15,18 @@ const cookies = new Cookies();
 
 const axios = require('axios').default;
 
-// const EDIT_BLOG_ENDPOINT = 'https://blogapi.huxdev.com/api/Blog/EditBlog';
-const EDIT_BLOG_ENDPOINT = 'https://localhost:44358/api/Blog/EditBlog/';
-// const GET_BLOG_ENDPOINT = 'https://blogapi.huxdev.com/api/Blog/GetBlog';
-const GET_BLOG_ENDPOINT = 'https://localhost:44358/api/Blog/GetBlog';
-// const DELETE_BLOG_ENDPOINT = 'https://blogapi.huxdev.com/api/Blog/DeleteBlog';
-const DELETE_BLOG_ENDPOINT = 'https://localhost:44358/api/Blog/DeleteBlog';
-
-type BlogItem = {
-  Id: number;
-  Title: string;
-  Content: string;
-  Requests: number;
-  DateCreated: string;
-  DateModified: string;
-};
-
-const initialState: BlogItem = {
-  Id: 0,
-  Title: '',
-  Content: '',
-  Requests: 0,
-  DateCreated: '',
-  DateModified: '',
-};
+const DELETE_BLOG_ENDPOINT = process.env.REACT_APP_ENDPOINT_BLOG_DELETE;
+const EDIT_BLOG_ENDPOINT = process.env.REACT_APP_ENDPOINT_BLOG_EDIT;
+const GET_BLOG_ENDPOINT = process.env.REACT_APP_ENDPOINT_BLOG_GET;
 
 const BlogEdit = ({ match }) => {
   const [loading, setLoading] = useState(false);
-  const [successfulUpload, setSuccessfulUpload] = useState('');
+  const [responseState, setResponseState] = useState('');
   const [buttonState, setButtonState] = useState(false);
   const [titleState, setTitleState] = useState('');
-  const [blogItem, setBlogItem] = useState<BlogItem>(initialState);
-  //   const [contentState, setContentState] = useState(() =>
-  //     EditorState.createEmpty()
-  //   );
-  const [contentState, setContentState] = useState('');
+  const [editorState, setEditorState] = useState(() =>
+    EditorState.createEmpty()
+  );
 
   useEffect(() => {
     axios
@@ -60,9 +37,11 @@ const BlogEdit = ({ match }) => {
       .then((response: AxiosResponse) => {
         if (response.status === 200) {
           setTitleState(response.data.title);
-          const content = convertFromHtml(response.data.content);
-          console.log(content);
-          //   setContentState(content);
+          setEditorState(
+            EditorState.createWithContent(
+              ContentState.createFromText(response.data.content)
+            )
+          );
         }
       })
       .catch((error: string) => {});
@@ -72,12 +51,12 @@ const BlogEdit = ({ match }) => {
   const handleEditBlog = () => {
     setLoading(true);
     setButtonState(true);
-    // const contentToHtml = convertToHTML(contentState.getCurrentContent());
-    const contentToHtml = convertToHTML(contentState);
+    const contentToHtml = convertToHTML(editorState.getCurrentContent());
     axios
       .post(
         EDIT_BLOG_ENDPOINT,
         {
+          id: match.params.id,
           title: titleState,
           content: contentToHtml,
         },
@@ -88,13 +67,13 @@ const BlogEdit = ({ match }) => {
       .then((response: AxiosResponse) => {
         if (response.status === 200) {
           setLoading(false);
-          setSuccessfulUpload('Successfully Uploaded!');
+          setResponseState('Successfully Updated!');
         }
       })
       .catch((error: string) => {
         setLoading(false);
         setButtonState(false);
-        setSuccessfulUpload('Failed To Upload!');
+        setResponseState('Failed To Update!');
       });
   };
 
@@ -105,7 +84,7 @@ const BlogEdit = ({ match }) => {
       .post(
         DELETE_BLOG_ENDPOINT,
         {
-          id: 1,
+          id: match.params.id,
         },
         {
           headers: { Authorization: `Bearer ${cookies.get('token')}` },
@@ -114,13 +93,13 @@ const BlogEdit = ({ match }) => {
       .then((response: AxiosResponse) => {
         if (response.status === 200) {
           setLoading(false);
-          setSuccessfulUpload('Successfully Uploaded!');
+          setResponseState('Blog Deleted!');
         }
       })
       .catch((error: string) => {
         setLoading(false);
         setButtonState(false);
-        setSuccessfulUpload('Failed To Upload!');
+        setResponseState('Failed To Delete!');
       });
   };
 
@@ -145,13 +124,11 @@ const BlogEdit = ({ match }) => {
           autoFocus
         />
         <Editor
-          initialContentState={contentState}
-          editorState={contentState}
-          value={contentState}
+          editorState={editorState}
           toolbarClassName="toolbarClassName"
           wrapperClassName="wrapperClassName"
           editorClassName="editorClassName"
-          onEditorStateChange={setContentState}
+          onEditorStateChange={setEditorState}
         />
         <Button
           variant="contained"
@@ -174,7 +151,7 @@ const BlogEdit = ({ match }) => {
           Delete
         </Button>
       </form>
-      <div className="uploadStatus">{successfulUpload}</div>
+      <div className="uploadStatus">{responseState}</div>
       <div className="loadingSpinner">
         {loading ? <CircularProgress /> : ''}
       </div>
