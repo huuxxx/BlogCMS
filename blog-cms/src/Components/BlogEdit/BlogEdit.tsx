@@ -4,8 +4,8 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Cookies from 'universal-cookie';
 import { Editor } from 'react-draft-wysiwyg';
-import { EditorState, ContentState } from 'draft-js';
-import { convertToHTML } from 'draft-convert';
+import { EditorState } from 'draft-js';
+import { convertToHTML, convertFromHTML } from 'draft-convert';
 import { CircularProgress } from '@material-ui/core';
 import NavMenu from '../NavMenu/NavMenu';
 import './BlogEdit.css';
@@ -39,7 +39,7 @@ const BlogEdit = ({ match }) => {
           setTitleState(response.data.title);
           setEditorState(
             EditorState.createWithContent(
-              ContentState.createFromText(response.data.content)
+              convertFromHTML(response.data.content)
             )
           );
         }
