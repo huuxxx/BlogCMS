@@ -113,7 +113,7 @@ const NewBlog = () => {
   };
 
   return (
-    <div>
+    <div style={{ marginBottom: 50 }}>
       <NavMenu />
       <form className="formParent" noValidate autoComplete="off">
         <h1>New Blog</h1>

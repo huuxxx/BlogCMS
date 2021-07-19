@@ -33,7 +33,7 @@ const Dashboard = () => {
       <NavMenu />
       <div className="dashboardParent">
         <h1>Dashboard</h1>
-        <span>Total page visits: {responseData?.totalVisits}</span>
+        <span>Total site visits: {responseData?.totalVisits}</span>
         <VisitorChart />
         <VisitorsTable />
       </div>
