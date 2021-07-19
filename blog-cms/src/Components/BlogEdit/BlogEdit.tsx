@@ -125,12 +125,11 @@ const BlogEdit = ({ match }) => {
         />
         <Editor
           editorState={editorState}
-          toolbarClassName="toolbarClassName"
-          wrapperClassName="wrapperClassName"
-          editorClassName="editorClassName"
+          editorStyle={{ border: '1px solid', marginBottom: '5px' }}
           onEditorStateChange={setEditorState}
         />
         <Button
+          style={{ marginRight: '5px' }}
           variant="contained"
           size="large"
           color="primary"

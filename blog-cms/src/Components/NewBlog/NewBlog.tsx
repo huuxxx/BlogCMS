@@ -126,10 +126,8 @@ const NewBlog = () => {
           autoFocus
         />
         <Editor
+          editorStyle={{ border: '1px solid', marginBottom: '5px' }}
           editorState={editorState}
-          toolbarClassName="toolbarClassName"
-          wrapperClassName="wrapperClassName"
-          editorClassName="editorClassName"
           onEditorStateChange={setEditorState}
         />
         <Button
