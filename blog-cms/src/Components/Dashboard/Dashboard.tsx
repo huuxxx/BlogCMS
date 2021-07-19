@@ -29,7 +29,7 @@ const Dashboard = () => {
   }, []);
 
   return (
-    <div>
+    <div className="dashboard">
       <NavMenu />
       <div className="dashboardParent">
         <h1>Dashboard</h1>
