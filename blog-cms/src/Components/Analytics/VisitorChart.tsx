@@ -33,7 +33,7 @@ const VisitorChart = () => {
       <VictoryChart
         domainPadding={25}
         domain={{ y: [0, 10] }}
-        padding={{ bottom: 90 }}
+        padding={{ bottom: 90, top: 60, left: 25, right: 25 }}
       >
         <VictoryLabel
           text="Visitors Past Week"
