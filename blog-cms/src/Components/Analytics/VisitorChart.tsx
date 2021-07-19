@@ -30,7 +30,11 @@ const VisitorChart = () => {
 
   return (
     <div className="visitor-chart">
-      <VictoryChart domainPadding={25} domain={{ y: [0, 10] }}>
+      <VictoryChart
+        domainPadding={25}
+        domain={{ y: [0, 10] }}
+        padding={{ bottom: 90 }}
+      >
         <VictoryLabel
           text="Visitors Past Week"
           x={225}
@@ -39,7 +43,12 @@ const VisitorChart = () => {
         />
         <VictoryBar data={responseData} x="nameOfDay" y="visitsInDay" />
         <VictoryAxis dependentAxis />
-        <VictoryAxis fixLabelOverlap style={{ tickLabels: { angle: 90 } }} />
+        <VictoryAxis
+          fixLabelOverlap
+          style={{
+            tickLabels: { angle: 90, textAnchor: 'start', overflow: 'visible' },
+          }}
+        />
       </VictoryChart>
     </div>
   );
