@@ -29,13 +29,13 @@ const Blogs = () => {
   }, []);
 
   return (
-    <div>
+    <div className="blogsParent">
       <NavMenu />
-
+      <h1>Blogs</h1>
       {responseData?.map((item) => (
         <div
           key={item.id.toString()}
-          className="blogsParent"
+          className="blogsContainer"
           style={{ marginBottom: '3em' }}
         >
           <Link to={`editblog/${item.id}`}>
