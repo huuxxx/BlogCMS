@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { VictoryChart, VictoryBar } from 'victory';
+import { VictoryChart, VictoryBar, VictoryAxis, VictoryLabel } from 'victory';
+import './VisitorChart.css';
 import { AxiosResponse } from 'axios';
 
 const axios = require('axios').default;
@@ -28,9 +29,26 @@ const VisitorChart = () => {
   }, []);
 
   return (
-    <div>
-      <VictoryChart>
+    <div className="visitor-chart">
+      <VictoryChart
+        domainPadding={25}
+        domain={{ y: [0, 10] }}
+        padding={{ bottom: 90, top: 60, left: 25, right: 25 }}
+      >
+        <VictoryLabel
+          text="Visitors Past Week"
+          x={225}
+          y={45}
+          textAnchor="middle"
+        />
         <VictoryBar data={responseData} x="nameOfDay" y="visitsInDay" />
+        <VictoryAxis dependentAxis />
+        <VictoryAxis
+          fixLabelOverlap
+          style={{
+            tickLabels: { angle: 90, textAnchor: 'start', overflow: 'visible' },
+          }}
+        />
       </VictoryChart>
     </div>
   );

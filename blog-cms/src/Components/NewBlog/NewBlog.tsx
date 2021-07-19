@@ -113,7 +113,7 @@ const NewBlog = () => {
   };
 
   return (
-    <div>
+    <div style={{ marginBottom: 50 }}>
       <NavMenu />
       <form className="formParent" noValidate autoComplete="off">
         <h1>New Blog</h1>
@@ -126,10 +126,8 @@ const NewBlog = () => {
           autoFocus
         />
         <Editor
+          editorStyle={{ border: '1px solid', marginBottom: '5px' }}
           editorState={editorState}
-          toolbarClassName="toolbarClassName"
-          wrapperClassName="wrapperClassName"
-          editorClassName="editorClassName"
           onEditorStateChange={setEditorState}
         />
         <Button

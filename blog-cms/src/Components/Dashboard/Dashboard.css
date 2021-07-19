@@ -1,5 +1,10 @@
 .dashboardParent {
   width: 60%;
-  margin-left: 20%;
+  margin-left: 5vw;
   margin-top: 1em;
+}
+
+.dashboard {
+  display: flex;
+  justify-content: center;
 }

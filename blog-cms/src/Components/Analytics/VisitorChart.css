@@ -1,0 +1,7 @@
+.visitor-chart {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  margin-top: 10px;
+  margin-bottom: 40px;
+}

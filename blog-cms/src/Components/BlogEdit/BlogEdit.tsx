@@ -110,7 +110,7 @@ const BlogEdit = ({ match }) => {
   };
 
   return (
-    <div>
+    <div style={{ marginBottom: 50 }}>
       <NavMenu />
       <form className="formParent" noValidate autoComplete="off">
         <h1>Edit Blog</h1>
@@ -125,12 +125,11 @@ const BlogEdit = ({ match }) => {
         />
         <Editor
           editorState={editorState}
-          toolbarClassName="toolbarClassName"
-          wrapperClassName="wrapperClassName"
-          editorClassName="editorClassName"
+          editorStyle={{ border: '1px solid', marginBottom: '5px' }}
           onEditorStateChange={setEditorState}
         />
         <Button
+          style={{ marginRight: '5px' }}
           variant="contained"
           size="large"
           color="primary"
