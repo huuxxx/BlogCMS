@@ -13,41 +13,34 @@ const customStyles = {
   },
 };
 
-// Make sure to bind modal to your appElement (https://reactcommunity.org/react-modal/accessibility/)
-Modal.setAppElement('#yourAppElement');
+Modal.setAppElement('#root');
 
-const ConfirmModal = () => {
-  let subtitle;
-  const [modalIsOpen, setIsOpen] = React.useState(false);
+interface IProps {
+  confirmButton: () => void;
+  show: boolean;
+  setShow: (state: boolean) => void;
+}
 
-  function openModal() {
-    setIsOpen(true);
-  }
-
-  function afterOpenModal() {
-    // references are now sync'd and can be accessed.
-    subtitle.style.color = '#f00';
-  }
-
-  function closeModal() {
-    setIsOpen(false);
-  }
-
-  return (
-    <div>
-      <Button onClick={openModal}>Open Modal</Button>
-      <Modal
-        isOpen={modalIsOpen}
-        onAfterOpen={afterOpenModal}
-        onRequestClose={closeModal}
-        style={customStyles}
-        contentLabel="Example Modal"
+const ConfirmModal: React.FC<IProps> = ({ confirmButton, show, setShow }) => (
+  <div className="customStyles">
+    <Modal isOpen={show} style={customStyles} contentLabel="Example Modal">
+      <div>Delete Blog?</div>
+      <Button
+        onClick={() => {
+          confirmButton();
+          setShow(false);
+        }}
       >
-        <Button onClick={closeModal}>close</Button>
-        <div>I am a modal</div>
-      </Modal>
-    </div>
-  );
-};
-
+        Yes
+      </Button>
+      <Button
+        onClick={() => {
+          setShow(false);
+        }}
+      >
+        No
+      </Button>
+    </Modal>
+  </div>
+);
 export default ConfirmModal;
