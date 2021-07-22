@@ -1,5 +1,10 @@
-.blogsParent {
-  width: 60%;
-  margin-left: 20%;
+.blogsEditParent {
+  margin-left: calc(var(--nav-menu-width) + 50px);
   margin-top: 1em;
+}
+
+@media only screen and (max-width: 768px) {
+  .blogsEditParent {
+    margin-left: 75px;
+  }
 }
