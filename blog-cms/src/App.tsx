@@ -7,6 +7,7 @@ import Blogs from './Components/Blogs/Blogs';
 import BlogEdit from './Components/BlogEdit/BlogEdit';
 import PrivateRoute from './Components/PrivateRoute/PrivateRoute';
 import { Store } from './Store';
+import './Global.css';
 
 export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
