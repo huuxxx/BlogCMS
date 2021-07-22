@@ -1,6 +1,15 @@
 import React from 'react';
 import Modal from 'react-modal';
 import Button from '@material-ui/core/Button';
+import './ConfirmModal.css';
+
+Modal.setAppElement('#root');
+
+interface IProps {
+  confirmButton: () => void;
+  show: boolean;
+  setShow: (state: boolean) => void;
+}
 
 const customStyles = {
   content: {
@@ -13,19 +22,13 @@ const customStyles = {
   },
 };
 
-Modal.setAppElement('#root');
-
-interface IProps {
-  confirmButton: () => void;
-  show: boolean;
-  setShow: (state: boolean) => void;
-}
-
 const ConfirmModal: React.FC<IProps> = ({ confirmButton, show, setShow }) => (
-  <div className="customStyles">
+  <div>
     <Modal isOpen={show} style={customStyles} contentLabel="Example Modal">
-      <div>Delete Blog?</div>
+      <div className="delete-blog-text">Delete Blog?</div>
       <Button
+        size="large"
+        className="yes-button"
         onClick={() => {
           confirmButton();
           setShow(false);
@@ -34,6 +37,8 @@ const ConfirmModal: React.FC<IProps> = ({ confirmButton, show, setShow }) => (
         Yes
       </Button>
       <Button
+        size="large"
+        className="no-button"
         onClick={() => {
           setShow(false);
         }}
