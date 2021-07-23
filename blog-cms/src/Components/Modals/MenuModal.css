@@ -4,6 +4,10 @@
   left: 0;
 }
 
+.ReactModal__Overlay {
+  z-index: 1000;
+}
+
 .mininav-ul {
   padding: 0;
   list-style-type: none;
