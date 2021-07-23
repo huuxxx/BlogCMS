@@ -1,0 +1,21 @@
+.delete-blog-text {
+  text-align: center;
+  padding: 10px;
+}
+
+.confirm-modal {
+  top: '50%';
+  left: '50%';
+  right: 'auto';
+  bottom: 'auto';
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+}
+
+.yes-button {
+  color: red !important;
+}
+
+.no-button {
+  color: black !important;
+}

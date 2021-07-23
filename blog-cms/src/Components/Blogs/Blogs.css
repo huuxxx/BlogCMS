@@ -1,9 +1,14 @@
 .blogsParent {
-  width: 60%;
-  margin-left: 20%;
+  margin-left: calc(var(--nav-menu-width) + 50px);
   margin-top: 1em;
 }
 
 .blogsContainer {
   margin-top: 50px;
+}
+
+@media only screen and (max-width: 768px) {
+  .blogsParent {
+    margin-left: 75px;
+  }
 }

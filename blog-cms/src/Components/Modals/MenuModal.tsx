@@ -1,18 +1,34 @@
-import React, { useState } from 'react';
-import { Link as Route, Redirect } from 'react-router-dom';
+import React from 'react';
+import Modal from 'react-modal';
 import Button from '@material-ui/core/Button';
+import { Link as Route, Redirect } from 'react-router-dom';
 import Cookies from 'universal-cookie';
-import { Visible } from 'react-grid-system';
 import { useGlobalContext } from '../../Store';
-import MenuModal from '../Modals/MenuModal';
-import './NavMenu.css';
+import './MenuModal.css';
 
 const cookies = new Cookies();
 
-const NavMenu = () => {
+Modal.setAppElement('#root');
+
+interface IProps {
+  show: boolean;
+  setShow: (state: boolean) => void;
+}
+
+const customStyles = {
+  content: {
+    top: '135px',
+    left: '80px',
+    bottom: 'auto',
+    width: '110px',
+    marginRight: '-50%',
+    transform: 'translate(-50%, -50%)',
+  },
+};
+
+const MenuModal: React.FC<IProps> = ({ show, setShow }) => {
   const { userName } = useGlobalContext();
   const { setIsLoggedIn } = useGlobalContext();
-  const [showModal, setshowModal] = useState(false);
 
   const logOut = () => {
     setIsLoggedIn(false);
@@ -20,18 +36,14 @@ const NavMenu = () => {
     <Redirect to="/" />;
   };
 
-  const menuButton = () => {
-    setshowModal((currentVal) => !currentVal);
-  };
-
   return (
-    <>
-      <Visible xxl xl lg md>
-        <div className="sidenav">
-          <div className="sidenav-contents">
-            <span className="userName">User - {userName}</span>
+    <div className="mininav">
+      <Modal isOpen={show} style={customStyles} contentLabel="Mini Menu">
+        <div className="mininav-contents">
+          <div>
+            <span>User - {userName}</span>
             <nav>
-              <ul>
+              <ul className="mininav-ul">
                 <li>
                   <Route to="/app/dashboard">Home</Route>
                 </li>
@@ -54,22 +66,8 @@ const NavMenu = () => {
             </Button>
           </div>
         </div>
-      </Visible>
-      <Visible sm xs>
-        <MenuModal show={showModal} setShow={setshowModal} />
-        <div className="menu-button">
-          <Button
-            variant="contained"
-            size="small"
-            color="inherit"
-            onClick={menuButton}
-          >
-            Menu
-          </Button>
-        </div>
-      </Visible>
-    </>
+      </Modal>
+    </div>
   );
 };
-
-export default NavMenu;
+export default MenuModal;

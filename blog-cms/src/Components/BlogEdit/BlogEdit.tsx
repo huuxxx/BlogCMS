@@ -8,6 +8,7 @@ import { EditorState } from 'draft-js';
 import { convertToHTML, convertFromHTML } from 'draft-convert';
 import { CircularProgress } from '@material-ui/core';
 import NavMenu from '../NavMenu/NavMenu';
+import ConfirmModal from '../Modals/ConfirmModal';
 import './BlogEdit.css';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
@@ -24,6 +25,7 @@ const BlogEdit = ({ match }) => {
   const [responseState, setResponseState] = useState('');
   const [buttonState, setButtonState] = useState(false);
   const [titleState, setTitleState] = useState('');
+  const [showModal, setshowModal] = useState(false);
   const [editorState, setEditorState] = useState(() =>
     EditorState.createEmpty()
   );
@@ -77,6 +79,10 @@ const BlogEdit = ({ match }) => {
       });
   };
 
+  const deleteButton = () => {
+    setshowModal(true);
+  };
+
   const handleDeleteBlog = () => {
     setLoading(true);
     setButtonState(true);
@@ -110,8 +116,13 @@ const BlogEdit = ({ match }) => {
   };
 
   return (
-    <div style={{ marginBottom: 50 }}>
+    <div style={{ marginBottom: 50, marginLeft: 50 }}>
       <NavMenu />
+      <ConfirmModal
+        confirmButton={handleDeleteBlog}
+        show={showModal}
+        setShow={setshowModal}
+      />
       <form className="formParent" noValidate autoComplete="off">
         <h1>Edit Blog</h1>
         <TextField
@@ -122,11 +133,13 @@ const BlogEdit = ({ match }) => {
           value={titleState}
           onChange={handleTitleChange}
           autoFocus
+          disabled={buttonState}
         />
         <Editor
           editorState={editorState}
           editorStyle={{ border: '1px solid', marginBottom: '5px' }}
           onEditorStateChange={setEditorState}
+          readOnly={buttonState}
         />
         <Button
           style={{ marginRight: '5px' }}
@@ -144,7 +157,7 @@ const BlogEdit = ({ match }) => {
           size="large"
           color="secondary"
           className="submitBtn"
-          onClick={handleDeleteBlog}
+          onClick={deleteButton}
           disabled={buttonState}
         >
           Delete
