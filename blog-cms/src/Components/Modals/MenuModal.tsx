@@ -17,7 +17,7 @@ interface IProps {
 
 const customStyles = {
   content: {
-    top: '160px',
+    top: '135px',
     left: '80px',
     bottom: 'auto',
     width: '110px',
@@ -40,19 +40,10 @@ const MenuModal: React.FC<IProps> = ({ show, setShow }) => {
     <div className="mininav">
       <Modal isOpen={show} style={customStyles} contentLabel="Mini Menu">
         <div className="mininav-contents">
-          <Button
-            size="small"
-            className="close-button"
-            onClick={() => {
-              setShow(false);
-            }}
-          >
-            X
-          </Button>
           <div>
             <span>User - {userName}</span>
             <nav>
-              <ul>
+              <ul className="mininav-ul">
                 <li>
                   <Route to="/app/dashboard">Home</Route>
                 </li>

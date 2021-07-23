@@ -1,16 +1,10 @@
-.close-button {
-  color: black;
-  border-color: black;
-  border-width: 2px;
-}
-
 .mininav {
   position: fixed;
   top: 0;
   left: 0;
 }
 
-.mininav .mininav-contents ul {
+.mininav-ul {
   padding: 0;
   list-style-type: none;
 }
