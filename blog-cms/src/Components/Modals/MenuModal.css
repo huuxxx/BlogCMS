@@ -1,0 +1,13 @@
+.close-button {
+  color: black !important;
+}
+
+/* .mininav .mininav-contents {
+  margin-left: 1em;
+  margin-top: 1em;
+} */
+
+.mininav ul {
+  padding: 0;
+  list-style-type: none;
+}

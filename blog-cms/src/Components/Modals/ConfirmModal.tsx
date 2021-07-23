@@ -24,7 +24,7 @@ const customStyles = {
 
 const ConfirmModal: React.FC<IProps> = ({ confirmButton, show, setShow }) => (
   <div>
-    <Modal isOpen={show} style={customStyles} contentLabel="Example Modal">
+    <Modal isOpen={show} style={customStyles} contentLabel="Confirm Delete">
       <div className="delete-blog-text">Delete Blog?</div>
       <Button
         size="large"
