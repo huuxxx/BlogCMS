@@ -133,11 +133,13 @@ const BlogEdit = ({ match }) => {
           value={titleState}
           onChange={handleTitleChange}
           autoFocus
+          disabled={buttonState}
         />
         <Editor
           editorState={editorState}
           editorStyle={{ border: '1px solid', marginBottom: '5px' }}
           onEditorStateChange={setEditorState}
+          readOnly={buttonState}
         />
         <Button
           style={{ marginRight: '5px' }}
