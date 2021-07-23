@@ -4,7 +4,7 @@ import Button from '@material-ui/core/Button';
 import { Link as Route, Redirect } from 'react-router-dom';
 import Cookies from 'universal-cookie';
 import { useGlobalContext } from '../../Store';
-import './ConfirmModal.css';
+import './MenuModal.css';
 
 const cookies = new Cookies();
 
@@ -17,10 +17,10 @@ interface IProps {
 
 const customStyles = {
   content: {
-    top: '20%',
-    left: '10%',
-    right: 'auto',
+    top: '160px',
+    left: '80px',
     bottom: 'auto',
+    width: '110px',
     marginRight: '-50%',
     transform: 'translate(-50%, -50%)',
   },
@@ -37,11 +37,11 @@ const MenuModal: React.FC<IProps> = ({ show, setShow }) => {
   };
 
   return (
-    <div>
+    <div className="mininav">
       <Modal isOpen={show} style={customStyles} contentLabel="Mini Menu">
-        <div className="mininav">
+        <div className="mininav-contents">
           <Button
-            size="large"
+            size="small"
             className="close-button"
             onClick={() => {
               setShow(false);
@@ -49,7 +49,7 @@ const MenuModal: React.FC<IProps> = ({ show, setShow }) => {
           >
             X
           </Button>
-          <div className="mininav-contents">
+          <div>
             <span>User - {userName}</span>
             <nav>
               <ul>
