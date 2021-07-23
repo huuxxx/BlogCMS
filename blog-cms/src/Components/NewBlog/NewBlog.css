@@ -1,7 +1,8 @@
 .formParent {
   width: 70%;
-  margin-left: 15%;
+  margin-left: 15vw;
   margin-top: 1em;
+  max-width: 1000px;
 }
 
 .uploadStatus {
@@ -13,4 +14,10 @@
 .loadingSpinner {
   display: flex;
   justify-content: center;
+}
+
+@media only screen and (max-width: 768px) {
+  .formParent {
+    margin-left: 8vw;
+  }
 }

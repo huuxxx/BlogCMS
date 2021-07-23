@@ -116,7 +116,7 @@ const BlogEdit = ({ match }) => {
   };
 
   return (
-    <div style={{ marginBottom: 50 }}>
+    <div style={{ marginBottom: 50, marginLeft: 50 }}>
       <NavMenu />
       <ConfirmModal
         confirmButton={handleDeleteBlog}
