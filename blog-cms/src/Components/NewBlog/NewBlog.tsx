@@ -4,7 +4,7 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Cookies from 'universal-cookie';
 import { Editor } from 'react-draft-wysiwyg';
-import { EditorState } from 'draft-js';
+import { EditorState, convertToRaw } from 'draft-js';
 import draftToHtml from 'draftjs-to-html';
 import { CircularProgress } from '@material-ui/core';
 import NavMenu from '../NavMenu/NavMenu';
@@ -16,6 +16,7 @@ const cookies = new Cookies();
 const axios = require('axios').default;
 
 const CREATE_BLOG_ENDPOINT = process.env.REACT_APP_ENDPOINT_BLOG_CREATE;
+const IMAGE_UPLOAD_ENDPOINT = process.env.REACT_APP_ENDPOINT_IMAGE_UPLOAD;
 
 type State = {
   title: string;
@@ -75,16 +76,47 @@ const NewBlog = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state.title]);
 
+  const uploadImage = (file) =>
+    new Promise((resolve, reject) => {
+      const data = new FormData();
+      data.append('file', file);
+      data.append('key', 'file');
+      axios
+        .post(
+          IMAGE_UPLOAD_ENDPOINT,
+          {
+            file: data,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${cookies.get('token')}`,
+              'Content-Type': 'multipart/form-data',
+            },
+          }
+        )
+        .then((response: AxiosResponse) => {
+          resolve({
+            data: {
+              link: response,
+            },
+          });
+        })
+        .catch((error: string) => {
+          reject(error);
+        });
+    });
+
   const handleCreateBlog = () => {
     setLoading(true);
     setUploadDisable(true);
-    const contentToHtml = draftToHtml(editorState.getCurrentContent());
+    const contentToHtml = convertToRaw(editorState.getCurrentContent());
+    const markup = draftToHtml(contentToHtml);
     axios
       .post(
         CREATE_BLOG_ENDPOINT,
         {
           title: state.title,
-          content: contentToHtml,
+          content: markup,
         },
         {
           headers: { Authorization: `Bearer ${cookies.get('token')}` },
@@ -129,6 +161,14 @@ const NewBlog = () => {
           editorStyle={{ border: '1px solid', marginBottom: '5px' }}
           editorState={editorState}
           onEditorStateChange={setEditorState}
+          toolbar={{
+            image: {
+              uploadCallback: uploadImage,
+              previewImage: true,
+              alt: { present: true, mandatory: true },
+              inputAccept: 'image/gif,image/jpeg,image/jpg,image/png,image/svg',
+            },
+          }}
         />
         <Button
           variant="contained"

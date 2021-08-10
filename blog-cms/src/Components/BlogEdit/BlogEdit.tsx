@@ -20,6 +20,7 @@ const axios = require('axios').default;
 const DELETE_BLOG_ENDPOINT = process.env.REACT_APP_ENDPOINT_BLOG_DELETE;
 const EDIT_BLOG_ENDPOINT = process.env.REACT_APP_ENDPOINT_BLOG_EDIT;
 const GET_BLOG_ENDPOINT = process.env.REACT_APP_ENDPOINT_BLOG_GET;
+const IMAGE_UPLOAD_ENDPOINT = process.env.REACT_APP_ENDPOINT_IMAGE_UPLOAD;
 
 const BlogEdit = ({ match }) => {
   const [loading, setLoading] = useState(false);
@@ -52,6 +53,30 @@ const BlogEdit = ({ match }) => {
       .catch((error: string) => {});
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const uploadImage = (file) =>
+    new Promise((resolve, reject) => {
+      resolve(
+        axios
+          .post(
+            IMAGE_UPLOAD_ENDPOINT,
+            {
+              file,
+            },
+            {
+              headers: { Authorization: `Bearer ${cookies.get('token')}` },
+            }
+          )
+          .then((response: AxiosResponse) => {
+            if (response.status === 200) {
+              setResponseState('Successfully Uploaded Image!');
+            }
+          })
+          .catch((error: string) => {
+            setResponseState('Failed To Upload Image!');
+          })
+      );
+    });
 
   const handleEditBlog = () => {
     setLoading(true);
@@ -144,6 +169,14 @@ const BlogEdit = ({ match }) => {
           editorStyle={{ border: '1px solid', marginBottom: '5px' }}
           onEditorStateChange={setEditorState}
           readOnly={buttonState}
+          toolbar={{
+            image: {
+              uploadCallback: uploadImage,
+              previewImage: true,
+              alt: { present: true, mandatory: true },
+              inputAccept: 'image/gif,image/jpeg,image/jpg,image/png,image/svg',
+            },
+          }}
         />
         <Button
           style={{ marginRight: '5px' }}
