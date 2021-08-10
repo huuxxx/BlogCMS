@@ -5,7 +5,7 @@ import Button from '@material-ui/core/Button';
 import Cookies from 'universal-cookie';
 import { Editor } from 'react-draft-wysiwyg';
 import { EditorState } from 'draft-js';
-import { convertToHTML } from 'draft-convert';
+import draftToHtml from 'draftjs-to-html';
 import { CircularProgress } from '@material-ui/core';
 import NavMenu from '../NavMenu/NavMenu';
 import './NewBlog.css';
@@ -78,7 +78,7 @@ const NewBlog = () => {
   const handleCreateBlog = () => {
     setLoading(true);
     setUploadDisable(true);
-    const contentToHtml = convertToHTML(editorState.getCurrentContent());
+    const contentToHtml = draftToHtml(editorState.getCurrentContent());
     axios
       .post(
         CREATE_BLOG_ENDPOINT,

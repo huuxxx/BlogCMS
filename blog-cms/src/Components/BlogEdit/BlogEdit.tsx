@@ -4,9 +4,10 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Cookies from 'universal-cookie';
 import { Editor } from 'react-draft-wysiwyg';
-import { EditorState } from 'draft-js';
-import { convertToHTML, convertFromHTML } from 'draft-convert';
+import { EditorState, convertToRaw, ContentState } from 'draft-js';
 import { CircularProgress } from '@material-ui/core';
+import draftToHtml from 'draftjs-to-html';
+import htmlToDraft from 'html-to-draftjs';
 import NavMenu from '../NavMenu/NavMenu';
 import ConfirmModal from '../Modals/ConfirmModal';
 import './BlogEdit.css';
@@ -39,11 +40,13 @@ const BlogEdit = ({ match }) => {
       .then((response: AxiosResponse) => {
         if (response.status === 200) {
           setTitleState(response.data.title);
-          setEditorState(
-            EditorState.createWithContent(
-              convertFromHTML(response.data.content)
-            )
+          const blocksFromHtml = htmlToDraft(response.data.content);
+          const { contentBlocks, entityMap } = blocksFromHtml;
+          const contentState = ContentState.createFromBlockArray(
+            contentBlocks,
+            entityMap
           );
+          setEditorState(EditorState.createWithContent(contentState));
         }
       })
       .catch((error: string) => {});
@@ -53,14 +56,15 @@ const BlogEdit = ({ match }) => {
   const handleEditBlog = () => {
     setLoading(true);
     setButtonState(true);
-    const contentToHtml = convertToHTML(editorState.getCurrentContent());
+    const contentToHtml = convertToRaw(editorState.getCurrentContent());
+    const markup = draftToHtml(contentToHtml);
     axios
       .post(
         EDIT_BLOG_ENDPOINT,
         {
           id: match.params.id,
           title: titleState,
-          content: contentToHtml,
+          content: markup,
         },
         {
           headers: { Authorization: `Bearer ${cookies.get('token')}` },
