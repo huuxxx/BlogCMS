@@ -108,16 +108,14 @@ const NewBlog = () => {
   function uploadImageCallBack(file) {
     return new Promise((resolve, reject) => {
       const xhr = new XMLHttpRequest(); // eslint-disable-line no-undef
-      xhr.open('POST', 'https://localhost:44358/api/Blog/UploadImage');
+      xhr.open('POST', IMAGE_UPLOAD_ENDPOINT ?? '');
       const data = new FormData(); // eslint-disable-line no-undef
       data.append('file', file);
       xhr.addEventListener('load', () => {
-        const response = JSON.parse(xhr.responseText);
-        resolve(response);
+        resolve(xhr.responseText);
       });
       xhr.addEventListener('error', () => {
-        const error = JSON.parse(xhr.responseText);
-        reject(error);
+        reject();
       });
       xhr.send(data);
     });
