@@ -56,6 +56,7 @@ const NewBlog = () => {
   const [loading, setLoading] = useState(false);
   const [successfulUpload, setSuccessfulUpload] = useState('');
   const [uploadDisabled, setUploadDisable] = useState(false);
+  const [uploadedImages, setUploadedImages] = useState([]);
 
   const [editorState, setEditorState] = useState(() =>
     EditorState.createEmpty()
@@ -80,20 +81,18 @@ const NewBlog = () => {
     new Promise((resolve, reject) => {
       const data = new FormData();
       data.append('file', file);
-      data.append('key', 'file');
+      data.append('name', 'name');
+      //   const formHeaders = data.getHeaders();
       axios
-        .post(
-          IMAGE_UPLOAD_ENDPOINT,
-          {
-            file: data,
+        .post(IMAGE_UPLOAD_ENDPOINT, {
+          file: data,
+          headers: {
+            // Authorization: `Bearer ${cookies.get('token')}`,
+            // 'Content-Type': 'multipart/form-data',
+            // ...formHeaders,
           },
-          {
-            headers: {
-              Authorization: `Bearer ${cookies.get('token')}`,
-              'Content-Type': 'multipart/form-data',
-            },
-          }
-        )
+          //   data,
+        })
         .then((response: AxiosResponse) => {
           resolve({
             data: {
@@ -105,6 +104,24 @@ const NewBlog = () => {
           reject(error);
         });
     });
+
+  function uploadImageCallBack(file) {
+    return new Promise((resolve, reject) => {
+      const xhr = new XMLHttpRequest(); // eslint-disable-line no-undef
+      xhr.open('POST', 'https://localhost:44358/api/Blog/UploadImage');
+      const data = new FormData(); // eslint-disable-line no-undef
+      data.append('file', file);
+      xhr.addEventListener('load', () => {
+        const response = JSON.parse(xhr.responseText);
+        resolve(response);
+      });
+      xhr.addEventListener('error', () => {
+        const error = JSON.parse(xhr.responseText);
+        reject(error);
+      });
+      xhr.send(data);
+    });
+  }
 
   const handleCreateBlog = () => {
     setLoading(true);
@@ -163,7 +180,7 @@ const NewBlog = () => {
           onEditorStateChange={setEditorState}
           toolbar={{
             image: {
-              uploadCallback: uploadImage,
+              uploadCallback: uploadImageCallBack,
               previewImage: true,
               alt: { present: true, mandatory: true },
               inputAccept: 'image/gif,image/jpeg,image/jpg,image/png,image/svg',
