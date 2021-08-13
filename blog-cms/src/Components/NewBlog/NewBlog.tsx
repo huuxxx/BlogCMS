@@ -56,7 +56,6 @@ const NewBlog = () => {
   const [loading, setLoading] = useState(false);
   const [successfulUpload, setSuccessfulUpload] = useState('');
   const [uploadDisabled, setUploadDisable] = useState(false);
-  const [uploadedImages, setUploadedImages] = useState([]);
 
   const [editorState, setEditorState] = useState(() =>
     EditorState.createEmpty()
@@ -115,8 +114,8 @@ const NewBlog = () => {
       );
       const data = new FormData(); // eslint-disable-line no-undef
       data.append('file', file);
-      xhr.addEventListener('load', (load) => {
-        resolve(xhr.responseText);
+      xhr.addEventListener('load', () => {
+        resolve({ data: { link: xhr.responseText } });
       });
       xhr.addEventListener('error', (error) => {
         reject();
