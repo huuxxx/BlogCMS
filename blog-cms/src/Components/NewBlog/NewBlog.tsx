@@ -119,6 +119,8 @@ const NewBlog = () => {
         resolve(xhr.responseText);
       });
       xhr.addEventListener('error', () => {
+        // eslint-disable-next-line no-console
+        console.log(xhr.response);
         reject();
       });
       xhr.send(data);
