@@ -105,6 +105,11 @@ const NewBlog = () => {
         });
     });
 
+  const displayMsg = (error) => {
+    // eslint-disable-next-line no-console
+    console.log(error);
+  };
+
   function uploadImageCallBack(file) {
     return new Promise((resolve, reject) => {
       const xhr = new XMLHttpRequest(); // eslint-disable-line no-undef
@@ -115,12 +120,12 @@ const NewBlog = () => {
       );
       const data = new FormData(); // eslint-disable-line no-undef
       data.append('file', file);
-      xhr.addEventListener('load', () => {
+      xhr.addEventListener('load', (load) => {
+        displayMsg(load);
         resolve(xhr.responseText);
       });
-      xhr.addEventListener('error', () => {
-        // eslint-disable-next-line no-console
-        console.log(xhr.response);
+      xhr.addEventListener('error', (error) => {
+        displayMsg(error);
         reject();
       });
       xhr.send(data);
