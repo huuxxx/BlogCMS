@@ -54,29 +54,25 @@ const BlogEdit = ({ match }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const uploadImage = (file) =>
-    new Promise((resolve, reject) => {
-      resolve(
-        axios
-          .post(
-            IMAGE_UPLOAD_ENDPOINT,
-            {
-              file,
-            },
-            {
-              headers: { Authorization: `Bearer ${cookies.get('token')}` },
-            }
-          )
-          .then((response: AxiosResponse) => {
-            if (response.status === 200) {
-              setResponseState('Successfully Uploaded Image!');
-            }
-          })
-          .catch((error: string) => {
-            setResponseState('Failed To Upload Image!');
-          })
+  function uploadImageCallBack(file) {
+    return new Promise((resolve, reject) => {
+      const xhr = new XMLHttpRequest(); // eslint-disable-line no-undef
+      xhr.open(
+        'POST',
+        IMAGE_UPLOAD_ENDPOINT ??
+          'https://blogapi.huxdev.com/api/Blog/UploadImage'
       );
+      const data = new FormData(); // eslint-disable-line no-undef
+      data.append('file', file);
+      xhr.addEventListener('load', () => {
+        resolve({ data: { link: xhr.responseText } });
+      });
+      xhr.addEventListener('error', () => {
+        reject();
+      });
+      xhr.send(data);
     });
+  }
 
   const handleEditBlog = () => {
     setLoading(true);
@@ -171,7 +167,7 @@ const BlogEdit = ({ match }) => {
           readOnly={buttonState}
           toolbar={{
             image: {
-              uploadCallback: uploadImage,
+              uploadCallback: uploadImageCallBack,
               previewImage: true,
               alt: { present: true, mandatory: true },
               inputAccept: 'image/gif,image/jpeg,image/jpg,image/png,image/svg',
