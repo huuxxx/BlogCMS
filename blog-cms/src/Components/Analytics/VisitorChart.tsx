@@ -16,6 +16,7 @@ const VisitorChart = () => {
   const [responseData, setResponseData] = useState<WeekVisitorsResponseItem[]>(
     []
   );
+  const [highestValue, setHighestValue] = useState(10);
 
   useEffect(() => {
     axios
@@ -23,16 +24,21 @@ const VisitorChart = () => {
       .then((response: AxiosResponse) => {
         if (response.status === 200) {
           setResponseData(response.data);
+          for (const item of responseData) {
+            if (item.visitsInDay >= 10) {
+              setHighestValue(item.visitsInDay);
+            }
+          }
         }
       })
       .catch((error: string) => {});
-  }, []);
+  }, [responseData]);
 
   return (
     <div className="visitor-chart">
       <VictoryChart
         domainPadding={25}
-        domain={{ y: [0, 10] }}
+        domain={{ y: [0, highestValue] }}
         padding={{ bottom: 90, top: 60, left: 25, right: 25 }}
       >
         <VictoryLabel
