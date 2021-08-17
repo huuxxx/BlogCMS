@@ -6,6 +6,7 @@ import NewBlog from './Components/NewBlog/NewBlog';
 import Blogs from './Components/Blogs/Blogs';
 import BlogEdit from './Components/BlogEdit/BlogEdit';
 import PrivateRoute from './Components/PrivateRoute/PrivateRoute';
+import ErrorPage from './Components/Errors/ErrorPage';
 import { Store } from './Store';
 import './Global.css';
 
@@ -24,6 +25,7 @@ export default function App() {
             <PrivateRoute path="/app/blogs" exact component={Blogs} />
             <PrivateRoute path="/app/editblog/:id" component={BlogEdit} />
             <PrivateRoute path="/app/dashboard" exact component={Dashboard} />
+            <PrivateRoute path="/app/errors" exact component={ErrorPage} />
           </Switch>
         </Store.Provider>
       </div>

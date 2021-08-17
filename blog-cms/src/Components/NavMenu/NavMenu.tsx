@@ -41,6 +41,9 @@ const NavMenu = () => {
                 <li>
                   <Route to="/app/newblog">New Blog</Route>
                 </li>
+                <li>
+                  <Route to="/app/errors">Errors</Route>
+                </li>
               </ul>
             </nav>
 

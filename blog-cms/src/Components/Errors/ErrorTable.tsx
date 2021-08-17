@@ -2,46 +2,29 @@
 import { AxiosResponse } from 'axios';
 import React, { useEffect, useMemo, useState } from 'react';
 import { useTable } from 'react-table';
-import './VisitorsTable.css';
+import './ErrorTable.css';
 
 const axios = require('axios').default;
 
-const GET_LAST_VISITORS_ENDPOINT =
-  process.env.REACT_APP_ENDPOINT_GET_LAST_VISITS;
+const GET_ERROR_LIST_ENDPOINT = process.env.REACT_APP_ENDPOINT_ERRORS_GET_ALL;
 
-const VisitorsChart = () => {
+const ErrorTable = () => {
   const [responseData, setResponsedata] = useState([]);
   const [loadingData, setLoadingData] = useState(true);
 
   const columns = useMemo(
     () => [
       {
-        Header: 'Visitor IP',
-        accessor: 'visitorIP',
+        Header: 'Date Logged',
+        accessor: 'dateCreated',
       },
       {
-        Header: 'Screen Width',
-        accessor: 'screenWidth',
+        Header: 'Stack Trace',
+        accessor: 'stackTrace',
       },
       {
-        Header: 'Screen Height',
-        accessor: 'screenHeight',
-      },
-      {
-        Header: 'Date Visited',
-        accessor: 'dateVisited',
-      },
-      {
-        Header: 'Blogs',
-        accessor: 'viewedBlogs',
-      },
-      {
-        Header: 'Projects',
-        accessor: 'viewedProjects',
-      },
-      {
-        Header: 'About',
-        accessor: 'viewedAbout',
+        Header: 'Message',
+        accessor: 'message',
       },
     ],
     []
@@ -57,7 +40,7 @@ const VisitorsChart = () => {
 
   useEffect(() => {
     axios
-      .post(GET_LAST_VISITORS_ENDPOINT)
+      .get(GET_ERROR_LIST_ENDPOINT)
       .then((response: AxiosResponse) => {
         if (response.status === 200) {
           setResponsedata(response.data);
@@ -102,4 +85,4 @@ const VisitorsChart = () => {
   );
 };
 
-export default VisitorsChart;
+export default ErrorTable;

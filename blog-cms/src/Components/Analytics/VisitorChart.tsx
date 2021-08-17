@@ -32,7 +32,8 @@ const VisitorChart = () => {
         }
       })
       .catch((error: string) => {});
-  }, [responseData]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div className="visitor-chart">
@@ -52,7 +53,11 @@ const VisitorChart = () => {
         <VictoryAxis
           fixLabelOverlap
           style={{
-            tickLabels: { angle: 90, textAnchor: 'start', overflow: 'visible' },
+            tickLabels: {
+              angle: 90,
+              textAnchor: 'start',
+              overflow: 'visible',
+            },
           }}
         />
       </VictoryChart>

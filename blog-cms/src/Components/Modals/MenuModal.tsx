@@ -41,6 +41,7 @@ const MenuModal: React.FC<IProps> = ({ show, setShow }) => {
       <Modal isOpen={show} style={customStyles} contentLabel="Mini Menu">
         <div className="mininav-contents">
           <div>
+            <Button>X</Button>
             <span>User - {userName}</span>
             <nav>
               <ul className="mininav-ul">
@@ -52,6 +53,9 @@ const MenuModal: React.FC<IProps> = ({ show, setShow }) => {
                 </li>
                 <li>
                   <Route to="/app/newblog">New Blog</Route>
+                </li>
+                <li>
+                  <Route to="/app/errors">Errors</Route>
                 </li>
               </ul>
             </nav>
