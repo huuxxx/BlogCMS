@@ -48,13 +48,12 @@ const ErrorTable = () => {
         }
       })
       .catch((error: string) => {});
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <>
       {loadingData ? (
-        <p>Loading Please wait...</p>
+        <p>Loading please wait...</p>
       ) : (
         <table {...getTableProps()}>
           <thead>
