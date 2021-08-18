@@ -19,16 +19,19 @@ const VisitorChart = () => {
   const [highestValue, setHighestValue] = useState(10);
 
   useEffect(() => {
+    for (const item of responseData) {
+      if (item.visitsInDay > 10) {
+        setHighestValue(item.visitsInDay);
+      }
+    }
+  }, [responseData]);
+
+  useEffect(() => {
     axios
       .get(GET_WEEK_VISITS_ENDPOINT)
       .then((response: AxiosResponse) => {
         if (response.status === 200) {
           setResponseData(response.data);
-          for (const item of responseData) {
-            if (item.visitsInDay > 10) {
-              setHighestValue(item.visitsInDay);
-            }
-          }
         }
       })
       .catch((error: string) => {});
