@@ -14,26 +14,28 @@ const CLEAR_ERROR_LIST_ENDPOINT = process.env.REACT_APP_ENDPOINT_ERRORS_CLEAR;
 const ErrorPage = () => {
   const [loading, setLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
-  const [buttonState, setButtonState] = useState(false);
+  const [buttonState, setButtonState] = useState(true);
   const [responseState, setResponseState] = useState('');
+  const [clearTable, setClearTable] = useState(false);
   const clearButton = () => {
     setShowModal(true);
   };
 
   const handleClearLog = () => {
     setLoading(true);
-    setButtonState(false);
+    setButtonState(true);
     axios
       .delete(CLEAR_ERROR_LIST_ENDPOINT)
       .then((response: AxiosResponse) => {
         if (response.status === 200) {
           setLoading(false);
+          setClearTable(true);
           setResponseState('Error Log Cleared!');
         }
       })
       .catch((error: string) => {
         setLoading(false);
-        setButtonState(true);
+        setButtonState(false);
         setResponseState('Failed To Clear Log!');
       });
   };
@@ -48,18 +50,17 @@ const ErrorPage = () => {
       />
       <div className="dashboardParent">
         <h1>Error Log</h1>
-        <ErrorTable setButtonState={setButtonState} />
-        <div className="submitBtn">
-          <Button
-            variant="contained"
-            size="large"
-            color="secondary"
-            onClick={clearButton}
-            disabled={buttonState}
-          >
-            Clear Log
-          </Button>
-        </div>
+        <ErrorTable setButtonState={setButtonState} clearTable={clearTable} />
+        <Button
+          variant="contained"
+          size="large"
+          color="secondary"
+          className="submitBtn"
+          onClick={clearButton}
+          disabled={buttonState}
+        >
+          Clear Log
+        </Button>
         <div className="uploadStatus">{responseState}</div>
         <div className="loadingSpinner">
           {loading ? <CircularProgress /> : ''}

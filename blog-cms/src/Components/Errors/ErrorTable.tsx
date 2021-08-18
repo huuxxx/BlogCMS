@@ -10,9 +10,10 @@ const GET_ERROR_LIST_ENDPOINT = process.env.REACT_APP_ENDPOINT_ERRORS_GET_ALL;
 
 interface IProps {
   setButtonState: (state: boolean) => void;
+  clearTable: boolean;
 }
 
-const ErrorTable: React.FC<IProps> = ({ setButtonState }) => {
+const ErrorTable: React.FC<IProps> = ({ setButtonState, clearTable }) => {
   const [responseData, setResponsedata] = useState([]);
   const [loadingData, setLoadingData] = useState(true);
 
@@ -43,14 +44,18 @@ const ErrorTable: React.FC<IProps> = ({ setButtonState }) => {
   } = useTable({ columns, data: responseData });
 
   useEffect(() => {
+    // eslint-disable-next-line no-unneeded-ternary
+    setButtonState(responseData.length === 0 ? true : false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [responseData]);
+
+  useEffect(() => {
     axios
       .get(GET_ERROR_LIST_ENDPOINT)
       .then((response: AxiosResponse) => {
         if (response.status === 200) {
           setResponsedata(response.data);
           setLoadingData(false);
-          // eslint-disable-next-line no-unneeded-ternary
-          //   setButtonState(responseData.length > 0 ? true : false);
         }
       })
       .catch((error: string) => {});
@@ -74,18 +79,20 @@ const ErrorTable: React.FC<IProps> = ({ setButtonState }) => {
               </tr>
             ))}
           </thead>
-          <tbody {...getTableBodyProps()}>
-            {rows.map((row) => {
-              prepareRow(row);
-              return (
-                <tr {...row.getRowProps()}>
-                  {row.cells.map((cell) => (
-                    <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
-                  ))}
-                </tr>
-              );
-            })}
-          </tbody>
+          {!clearTable ? (
+            <tbody {...getTableBodyProps()}>
+              {rows.map((row) => {
+                prepareRow(row);
+                return (
+                  <tr {...row.getRowProps()}>
+                    {row.cells.map((cell) => (
+                      <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
+                    ))}
+                  </tr>
+                );
+              })}
+            </tbody>
+          ) : null}
         </table>
       )}
     </>
