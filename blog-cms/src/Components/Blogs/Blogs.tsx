@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { AxiosResponse } from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
+import { Button } from '@material-ui/core';
 import NavMenu from '../NavMenu/NavMenu';
 import './Blogs.css';
 
@@ -16,6 +17,7 @@ type BlogResponseItem = {
 
 const Blogs = () => {
   const [responseData, setResponseData] = useState<BlogResponseItem[]>();
+  const history = useHistory();
 
   useEffect(() => {
     axios
@@ -32,6 +34,15 @@ const Blogs = () => {
     <div className="blogsParent">
       <NavMenu />
       <h1>Blogs</h1>
+      <Button
+        variant="contained"
+        size="small"
+        color="inherit"
+        onClick={() => history.push('/app/newblog')}
+        style={{ marginTop: '25px' }}
+      >
+        + Create Blog
+      </Button>
       {responseData?.map((item) => (
         <div
           key={item.id.toString()}
