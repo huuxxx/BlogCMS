@@ -8,7 +8,12 @@ const axios = require('axios').default;
 
 const GET_ERROR_LIST_ENDPOINT = process.env.REACT_APP_ENDPOINT_ERRORS_GET_ALL;
 
-const ErrorTable = () => {
+interface IProps {
+  setButtonState: (state: boolean) => void;
+  clearTable: boolean;
+}
+
+const ErrorTable: React.FC<IProps> = ({ setButtonState, clearTable }) => {
   const [responseData, setResponsedata] = useState([]);
   const [loadingData, setLoadingData] = useState(true);
 
@@ -39,6 +44,12 @@ const ErrorTable = () => {
   } = useTable({ columns, data: responseData });
 
   useEffect(() => {
+    // eslint-disable-next-line no-unneeded-ternary
+    setButtonState(responseData.length === 0 ? true : false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [responseData]);
+
+  useEffect(() => {
     axios
       .get(GET_ERROR_LIST_ENDPOINT)
       .then((response: AxiosResponse) => {
@@ -48,6 +59,7 @@ const ErrorTable = () => {
         }
       })
       .catch((error: string) => {});
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -67,18 +79,20 @@ const ErrorTable = () => {
               </tr>
             ))}
           </thead>
-          <tbody {...getTableBodyProps()}>
-            {rows.map((row) => {
-              prepareRow(row);
-              return (
-                <tr {...row.getRowProps()}>
-                  {row.cells.map((cell) => (
-                    <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
-                  ))}
-                </tr>
-              );
-            })}
-          </tbody>
+          {!clearTable ? (
+            <tbody {...getTableBodyProps()}>
+              {rows.map((row) => {
+                prepareRow(row);
+                return (
+                  <tr {...row.getRowProps()}>
+                    {row.cells.map((cell) => (
+                      <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
+                    ))}
+                  </tr>
+                );
+              })}
+            </tbody>
+          ) : null}
         </table>
       )}
     </>

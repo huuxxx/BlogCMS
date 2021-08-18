@@ -25,7 +25,7 @@ const VisitorChart = () => {
         if (response.status === 200) {
           setResponseData(response.data);
           for (const item of responseData) {
-            if (item.visitsInDay >= 10) {
+            if (item.visitsInDay > 10) {
               setHighestValue(item.visitsInDay);
             }
           }

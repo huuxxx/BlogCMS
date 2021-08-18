@@ -57,11 +57,7 @@ const BlogEdit = ({ match }) => {
   function uploadImageCallBack(file) {
     return new Promise((resolve, reject) => {
       const xhr = new XMLHttpRequest(); // eslint-disable-line no-undef
-      xhr.open(
-        'POST',
-        IMAGE_UPLOAD_ENDPOINT ??
-          'https://blogapi.huxdev.com/api/Blog/UploadImage'
-      );
+      xhr.open('POST', IMAGE_UPLOAD_ENDPOINT!);
       const data = new FormData(); // eslint-disable-line no-undef
       data.append('file', file);
       xhr.addEventListener('load', () => {
@@ -147,6 +143,7 @@ const BlogEdit = ({ match }) => {
         confirmButton={handleDeleteBlog}
         show={showModal}
         setShow={setshowModal}
+        message="Delete Blog?"
       />
       <form className="formParent" noValidate autoComplete="off">
         <h1>Edit Blog</h1>
