@@ -12,3 +12,13 @@
   padding: 0;
   list-style-type: none;
 }
+
+.close-button {
+  margin-left: 64px;
+  margin-top: -18px;
+}
+
+.user-name {
+  margin-top: 10px;
+  margin-bottom: -10px;
+}

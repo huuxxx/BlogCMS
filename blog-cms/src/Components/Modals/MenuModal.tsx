@@ -36,13 +36,26 @@ const MenuModal: React.FC<IProps> = ({ show, setShow }) => {
     <Redirect to="/" />;
   };
 
+  const closeButton = () => {
+    setShow(false);
+  };
+
   return (
     <div className="mininav">
       <Modal isOpen={show} style={customStyles} contentLabel="Mini Menu">
         <div className="mininav-contents">
           <div>
-            <Button>X</Button>
-            <span>User - {userName}</span>
+            <div className="close-button">
+              <Button
+                color="inherit"
+                variant="contained"
+                size="small"
+                onClick={closeButton}
+              >
+                x
+              </Button>
+            </div>
+            <div className="user-name">User - {userName}</div>
             <nav>
               <ul className="mininav-ul">
                 <li>
@@ -52,14 +65,10 @@ const MenuModal: React.FC<IProps> = ({ show, setShow }) => {
                   <Route to="/app/blogs">Blogs</Route>
                 </li>
                 <li>
-                  <Route to="/app/newblog">New Blog</Route>
-                </li>
-                <li>
                   <Route to="/app/errors">Errors</Route>
                 </li>
               </ul>
             </nav>
-
             <Button
               variant="contained"
               size="small"

@@ -39,9 +39,6 @@ const NavMenu = () => {
                   <Route to="/app/blogs">Blogs</Route>
                 </li>
                 <li>
-                  <Route to="/app/newblog">New Blog</Route>
-                </li>
-                <li>
                   <Route to="/app/errors">Errors</Route>
                 </li>
               </ul>
