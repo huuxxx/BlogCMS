@@ -51,16 +51,17 @@ const ErrorPage = () => {
       <div className="dashboardParent">
         <h1>Error Log</h1>
         <ErrorTable setButtonState={setButtonState} clearTable={clearTable} />
-        <Button
-          variant="contained"
-          size="large"
-          color="secondary"
-          className="submitBtn"
-          onClick={clearButton}
-          disabled={buttonState}
-        >
-          Clear Log
-        </Button>
+        <div className="clear-log-button">
+          <Button
+            variant="contained"
+            size="large"
+            color="secondary"
+            onClick={clearButton}
+            disabled={buttonState}
+          >
+            Clear Log
+          </Button>
+        </div>
         <div className="uploadStatus">{responseState}</div>
         <div className="loadingSpinner">
           {loading ? <CircularProgress /> : ''}
