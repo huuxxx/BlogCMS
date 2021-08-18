@@ -9,6 +9,7 @@ interface IProps {
   confirmButton: () => void;
   show: boolean;
   setShow: (state: boolean) => void;
+  message: string;
 }
 
 const customStyles = {
@@ -22,10 +23,15 @@ const customStyles = {
   },
 };
 
-const ConfirmModal: React.FC<IProps> = ({ confirmButton, show, setShow }) => (
+const ConfirmModal: React.FC<IProps> = ({
+  confirmButton,
+  show,
+  setShow,
+  message,
+}) => (
   <div>
     <Modal isOpen={show} style={customStyles} contentLabel="Confirm Delete">
-      <div className="delete-blog-text">Delete Blog?</div>
+      <div className="delete-blog-text">{message}</div>
       <Button
         size="large"
         className="yes-button"

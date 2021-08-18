@@ -147,6 +147,7 @@ const BlogEdit = ({ match }) => {
         confirmButton={handleDeleteBlog}
         show={showModal}
         setShow={setshowModal}
+        message="Delete Blog?"
       />
       <form className="formParent" noValidate autoComplete="off">
         <h1>Edit Blog</h1>

@@ -8,7 +8,11 @@ const axios = require('axios').default;
 
 const GET_ERROR_LIST_ENDPOINT = process.env.REACT_APP_ENDPOINT_ERRORS_GET_ALL;
 
-const ErrorTable = () => {
+interface IProps {
+  setButtonState: (state: boolean) => void;
+}
+
+const ErrorTable: React.FC<IProps> = ({ setButtonState }) => {
   const [responseData, setResponsedata] = useState([]);
   const [loadingData, setLoadingData] = useState(true);
 
@@ -45,9 +49,12 @@ const ErrorTable = () => {
         if (response.status === 200) {
           setResponsedata(response.data);
           setLoadingData(false);
+          // eslint-disable-next-line no-unneeded-ternary
+          //   setButtonState(responseData.length > 0 ? true : false);
         }
       })
       .catch((error: string) => {});
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
