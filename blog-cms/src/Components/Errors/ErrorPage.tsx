@@ -40,7 +40,7 @@ const ErrorPage = () => {
       });
   };
   return (
-    <div className="dashboard">
+    <div className="page-parent">
       <NavMenu />
       <ConfirmModal
         confirmButton={handleClearLog}
@@ -48,7 +48,7 @@ const ErrorPage = () => {
         setShow={setShowModal}
         message="Clear Error Log?"
       />
-      <div className="dashboardParent">
+      <div className="page-sub-parent">
         <h1>Error Log</h1>
         <ErrorTable setButtonState={setButtonState} clearTable={clearTable} />
         <div className="clear-log-button">

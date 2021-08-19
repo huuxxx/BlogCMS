@@ -29,9 +29,9 @@ const Dashboard = () => {
   }, []);
 
   return (
-    <div className="dashboard">
+    <div className="page-parent">
       <NavMenu />
-      <div className="dashboardParent">
+      <div className="page-sub-parent">
         <h1>Dashboard</h1>
         <span>Total site visits: {responseData?.totalVisits}</span>
         <VisitorChart />

@@ -31,30 +31,32 @@ const Blogs = () => {
   }, []);
 
   return (
-    <div className="blogsParent">
-      <NavMenu />
-      <h1>Blogs</h1>
-      <Button
-        variant="contained"
-        size="small"
-        color="inherit"
-        onClick={() => history.push('/app/newblog')}
-        style={{ marginTop: '25px' }}
-      >
-        + Create Blog
-      </Button>
-      {responseData?.map((item) => (
-        <div
-          key={item.id.toString()}
-          className="blogsContainer"
-          style={{ marginBottom: '3em' }}
+    <div className="page-parent">
+      <div className="page-sub-parent blogs-parent">
+        <NavMenu />
+        <h1>Blogs</h1>
+        <Button
+          variant="contained"
+          size="small"
+          color="inherit"
+          onClick={() => history.push('/app/newblog')}
+          style={{ marginTop: '25px' }}
         >
-          <Link to={`editblog/${item.id}`}>
-            <h3>{item.title}</h3>
-          </Link>
-          <span>{item.dateCreated.split(' ')[0]}</span>
-        </div>
-      ))}
+          + Create Blog
+        </Button>
+        {responseData?.map((item) => (
+          <div
+            key={item.id.toString()}
+            className="blogs-container"
+            style={{ marginBottom: '3em' }}
+          >
+            <Link to={`editblog/${item.id}`}>
+              <h3>{item.title}</h3>
+            </Link>
+            <span>{item.dateCreated.split(' ')[0]}</span>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };

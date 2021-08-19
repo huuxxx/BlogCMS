@@ -7,6 +7,23 @@
   pointer-events: none;
 }
 
+.page-sub-parent {
+  width: 60%;
+  margin-left: 5vw;
+  margin-top: 1em;
+}
+
+.page-parent {
+  display: flex;
+  margin-left: var(--nav-menu-width);
+}
+
+@media only screen and (max-width: 768px) {
+  .page-parent {
+    margin-left: 0;
+  }
+}
+
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;

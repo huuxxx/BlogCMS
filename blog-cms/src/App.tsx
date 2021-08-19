@@ -9,6 +9,7 @@ import PrivateRoute from './Components/PrivateRoute/PrivateRoute';
 import ErrorPage from './Components/Errors/ErrorPage';
 import { Store } from './Store';
 import './Global.css';
+import './App.css';
 
 export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);

@@ -1,14 +1,9 @@
-.blogsParent {
-  margin-left: calc(var(--nav-menu-width) + 50px);
-  margin-top: 1em;
-}
-
-.blogsContainer {
+.blogs-container {
   margin-top: 50px;
 }
 
 @media only screen and (max-width: 768px) {
-  .blogsParent {
+  .blogs-parent {
     margin-left: 75px;
   }
 }
