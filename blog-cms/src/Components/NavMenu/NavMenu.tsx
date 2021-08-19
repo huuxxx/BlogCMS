@@ -53,6 +53,15 @@ const NavMenu = () => {
               variant="contained"
               size="small"
               color="inherit"
+              onClick={() => history.push('/app/images')}
+              style={{ marginTop: '5px', minWidth: '80px' }}
+            >
+              Images
+            </Button>
+            <Button
+              variant="contained"
+              size="small"
+              color="inherit"
               onClick={() => history.push('/app/errors')}
               style={{
                 marginTop: '5px',
