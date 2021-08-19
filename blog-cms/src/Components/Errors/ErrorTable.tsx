@@ -65,7 +65,9 @@ const ErrorTable: React.FC<IProps> = ({ setButtonState, clearTable }) => {
   return (
     <>
       {loadingData ? (
-        <p>Loading please wait...</p>
+        <div style={{ marginBottom: '25px' }}>
+          <p>...loading</p>
+        </div>
       ) : (
         <table {...getTableProps()}>
           <thead>

@@ -70,7 +70,7 @@ const VisitorsChart = () => {
   return (
     <>
       {loadingData ? (
-        <p>Loading please wait...</p>
+        <p>...loading</p>
       ) : (
         <table {...getTableProps()}>
           <thead>
