@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link as Route, Redirect } from 'react-router-dom';
+import { Redirect, useHistory } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import Cookies from 'universal-cookie';
 import { Visible } from 'react-grid-system';
@@ -13,6 +13,7 @@ const NavMenu = () => {
   const { userName } = useGlobalContext();
   const { setIsLoggedIn } = useGlobalContext();
   const [showModal, setshowModal] = useState(false);
+  const history = useHistory();
 
   const logOut = () => {
     setIsLoggedIn(false);
@@ -30,20 +31,37 @@ const NavMenu = () => {
         <div className="sidenav">
           <div className="sidenav-contents">
             <span className="userName">User - {userName}</span>
-            <nav>
-              <ul>
-                <li>
-                  <Route to="/app/dashboard">Home</Route>
-                </li>
-                <li>
-                  <Route to="/app/blogs">Blogs</Route>
-                </li>
-                <li>
-                  <Route to="/app/errors">Errors</Route>
-                </li>
-              </ul>
-            </nav>
-
+            <Button
+              variant="contained"
+              size="small"
+              color="inherit"
+              onClick={() => history.push('/app/dashboard')}
+              style={{ marginTop: '25px', minWidth: '80px' }}
+            >
+              Home
+            </Button>
+            <Button
+              variant="contained"
+              size="small"
+              color="inherit"
+              onClick={() => history.push('/app/blogs')}
+              style={{ marginTop: '5px', minWidth: '80px' }}
+            >
+              Blogs
+            </Button>
+            <Button
+              variant="contained"
+              size="small"
+              color="inherit"
+              onClick={() => history.push('/app/errors')}
+              style={{
+                marginTop: '5px',
+                marginBottom: '25px',
+                minWidth: '80px',
+              }}
+            >
+              Errors
+            </Button>
             <Button
               variant="contained"
               size="small"

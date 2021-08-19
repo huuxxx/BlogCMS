@@ -1,7 +1,7 @@
 import React from 'react';
 import Modal from 'react-modal';
 import Button from '@material-ui/core/Button';
-import { Link as Route, Redirect } from 'react-router-dom';
+import { Redirect, useHistory } from 'react-router-dom';
 import Cookies from 'universal-cookie';
 import { useGlobalContext } from '../../Store';
 import './MenuModal.css';
@@ -29,6 +29,7 @@ const customStyles = {
 const MenuModal: React.FC<IProps> = ({ show, setShow }) => {
   const { userName } = useGlobalContext();
   const { setIsLoggedIn } = useGlobalContext();
+  const history = useHistory();
 
   const logOut = () => {
     setIsLoggedIn(false);
@@ -56,19 +57,37 @@ const MenuModal: React.FC<IProps> = ({ show, setShow }) => {
               </Button>
             </div>
             <div className="user-name">User - {userName}</div>
-            <nav>
-              <ul className="mininav-ul">
-                <li>
-                  <Route to="/app/dashboard">Home</Route>
-                </li>
-                <li>
-                  <Route to="/app/blogs">Blogs</Route>
-                </li>
-                <li>
-                  <Route to="/app/errors">Errors</Route>
-                </li>
-              </ul>
-            </nav>
+            <Button
+              variant="contained"
+              size="small"
+              color="inherit"
+              onClick={() => history.push('/app/dashboard')}
+              style={{ marginTop: '25px', minWidth: '80px' }}
+            >
+              Home
+            </Button>
+            <Button
+              variant="contained"
+              size="small"
+              color="inherit"
+              onClick={() => history.push('/app/blogs')}
+              style={{ marginTop: '5px', minWidth: '80px' }}
+            >
+              Blogs
+            </Button>
+            <Button
+              variant="contained"
+              size="small"
+              color="inherit"
+              onClick={() => history.push('/app/errors')}
+              style={{
+                marginTop: '5px',
+                marginBottom: '25px',
+                minWidth: '80px',
+              }}
+            >
+              Errors
+            </Button>
             <Button
               variant="contained"
               size="small"
