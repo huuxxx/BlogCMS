@@ -25,7 +25,7 @@ const ErrorPage = () => {
     setLoading(true);
     setButtonState(true);
     axios
-      .delete(CLEAR_ERROR_LIST_ENDPOINT)
+      .post(CLEAR_ERROR_LIST_ENDPOINT)
       .then((response: AxiosResponse) => {
         if (response.status === 200) {
           setLoading(false);
