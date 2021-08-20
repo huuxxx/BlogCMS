@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { AxiosResponse } from 'axios';
-import { Button, CircularProgress } from '@material-ui/core';
 import Cookies from 'universal-cookie';
 import ConfirmModal from '../Modals/ConfirmModal';
+import ImageTile from './ImageTile';
 import NavMenu from '../NavMenu/NavMenu';
 import './ImagesPage.css';
 
@@ -15,10 +15,10 @@ const DELETE_BLOG_ENDPOINT = process.env.REACT_APP_ENDPOINT_IMAGE_DELETE;
 const ImagesPage = () => {
   const [responseData, setResponseData] = useState<[string]>();
   const [showModal, setshowModal] = useState(false);
-  const [buttonState, setButtonState] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [imageDelte, setImageDeleted] = useState(false);
+  const [buttonState, setButtonState] = useState(false);
   const [deleteId, setDeleteId] = useState('');
-  const [imageDeleted, setImageDeleted] = useState(false);
 
   useEffect(() => {
     axios
@@ -62,9 +62,7 @@ const ImagesPage = () => {
       <div className="page-sub-parent">
         <NavMenu />
         <ConfirmModal
-          confirmButton={() => {
-            handleDeleteImage();
-          }}
+          confirmButton={handleDeleteImage}
           show={showModal}
           setShow={setshowModal}
           message="Delete Image?"
@@ -73,34 +71,14 @@ const ImagesPage = () => {
         <div className="images-page-item-container">
           {responseData?.map((item) => (
             <div key={item}>
-              <img
-                src={
-                  // eslint-disable-next-line prefer-template
-                  'https://blogapi.huxdev.com/Images/' + item.toString()
-                }
-                alt={item.toString()}
-                width="200px"
-                height="200px"
-                style={{ border: 'solid' }}
-                className={imageDeleted ? 'image-deleted' : ''}
+              <ImageTile
+                item={item}
+                showModal={setshowModal}
+                deleteId={setDeleteId}
+                loading={loading}
+                imageDeleted={imageDelte}
+                buttonState={buttonState}
               />
-              <Button
-                variant="contained"
-                size="large"
-                color="secondary"
-                style={{ marginTop: '55px', marginLeft: '-150px' }}
-                onClick={() => {
-                  // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-                  setshowModal(true);
-                  setDeleteId(item.toString());
-                }}
-                disabled={buttonState}
-              >
-                Delete
-              </Button>
-              <div className="loadingSpinner">
-                {loading ? <CircularProgress /> : ''}
-              </div>
             </div>
           ))}
         </div>
