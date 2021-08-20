@@ -4,6 +4,10 @@
   grid-gap: 100px;
 }
 
+.image-deleted {
+  opacity: 0.4;
+}
+
 /* XL */
 @media only screen and (max-width: 1200px) {
   .images-page-item-container {
