@@ -32,32 +32,30 @@ const ImagesPage = () => {
       <div className="page-sub-parent">
         <NavMenu />
         <h1>Images</h1>
-        {responseData?.map((item) => (
-          <div
-            key={item}
-            style={{ marginBottom: '3em' }}
-            className="images-page-item-container"
-          >
-            <img
-              // eslint-disable-next-line prefer-template
-              src={'https://blogapi.huxdev.com/Images/' + item.toString()}
-              alt={item.toString()}
-              width="200px"
-              height="200px"
-              //   style={{ marginTop: '25px' }}
-            />
-            <Button
-              variant="contained"
-              size="large"
-              color="secondary"
-              style={{ marginTop: '275px', marginLeft: '-150px' }}
-              //   onClick={deleteButton}
-              //   disabled={buttonState}
-            >
-              Delete
-            </Button>
-          </div>
-        ))}
+        <div className="images-page-item-container">
+          {responseData?.map((item) => (
+            <div key={item}>
+              <img
+                // eslint-disable-next-line prefer-template
+                src={'https://blogapi.huxdev.com/Images/' + item.toString()}
+                alt={item.toString()}
+                width="200px"
+                height="200px"
+                style={{ border: 'solid' }}
+              />
+              <Button
+                variant="contained"
+                size="large"
+                color="secondary"
+                style={{ marginTop: '55px', marginLeft: '-150px' }}
+                //   onClick={deleteButton}
+                //   disabled={buttonState}
+              >
+                Delete
+              </Button>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
