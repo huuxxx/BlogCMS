@@ -1,6 +1,7 @@
 /* eslint-disable react/jsx-key */
 import { AxiosResponse } from 'axios';
 import React, { useEffect, useMemo, useState } from 'react';
+import { CircularProgress } from '@material-ui/core';
 import { useTable } from 'react-table';
 import './ErrorTable.css';
 
@@ -15,7 +16,7 @@ interface IProps {
 
 const ErrorTable: React.FC<IProps> = ({ setButtonState, clearTable }) => {
   const [responseData, setResponsedata] = useState([]);
-  const [loadingData, setLoadingData] = useState(true);
+  const [loading, setLoading] = useState(true);
 
   const columns = useMemo(
     () => [
@@ -55,7 +56,7 @@ const ErrorTable: React.FC<IProps> = ({ setButtonState, clearTable }) => {
       .then((response: AxiosResponse) => {
         if (response.status === 200) {
           setResponsedata(response.data);
-          setLoadingData(false);
+          setLoading(false);
         }
       })
       .catch((error: string) => {});
@@ -64,13 +65,6 @@ const ErrorTable: React.FC<IProps> = ({ setButtonState, clearTable }) => {
 
   return (
     <>
-      {loadingData ? (
-        <div style={{ marginBottom: '25px' }}>
-          <p>...loading</p>
-        </div>
-      ) : (
-        ''
-      )}
       <table {...getTableProps()}>
         <thead>
           {headerGroups.map((headerGroup) => (
@@ -96,6 +90,13 @@ const ErrorTable: React.FC<IProps> = ({ setButtonState, clearTable }) => {
           </tbody>
         ) : null}
       </table>
+      {loading ? (
+        <div className="loadingSpinner">
+          <CircularProgress />
+        </div>
+      ) : (
+        ''
+      )}
     </>
   );
 };
