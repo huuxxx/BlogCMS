@@ -16,14 +16,9 @@ const axios = require('axios').default;
 
 const LOGIN_ENDPOINT = process.env.REACT_APP_ENDPOINT_LOGIN;
 
-interface LoginRequest {
-  UserName: string;
-  Password: string;
-}
-
 const Login = () => {
-  const [password, setPassword] = useState('');
-  const [userName, setUserName] = useState('');
+  const [passwordForm, setPassword] = useState('');
+  const [userNameForm, setUserName] = useState('');
   const history = useHistory();
   const [loading, setLoading] = useState(false);
   const { setIsLoggedIn } = useGlobalContext();
@@ -31,27 +26,23 @@ const Login = () => {
   const [helperText, setHelperText] = useState('');
   const [isError, setIsError] = useState(false);
 
-  const loginRequest: LoginRequest = {
-    UserName: userName,
-    Password: password,
-  };
-
   const handleLogin = () => {
     setLoading(true);
     axios
       .post(LOGIN_ENDPOINT, {
-        loginRequest,
+        userName: userNameForm,
+        password: passwordForm,
       })
       .then((response) => {
         if (response.status === 200) {
           setIsLoggedIn(true);
-          setLoggedInUserName(userName);
-          const obj = JSON.parse(JSON.stringify(response.data));
+          setLoggedInUserName(userNameForm);
+          const obj = response.data;
           cookies.set('token', obj.token);
           history.push('/app/dashboard');
         }
       })
-      .catch(() => {
+      .catch((error) => {
         setLoading(false);
         setHelperText('Login error');
         setIsError(true);
@@ -93,7 +84,7 @@ const Login = () => {
                 placeholder="Username"
                 margin="normal"
                 onChange={handleUsernameChange}
-                onKeyPress={handleKeyPress}
+                onKeyUp={handleKeyPress}
               />
               <TextField
                 spellCheck={false}
@@ -106,7 +97,7 @@ const Login = () => {
                 margin="normal"
                 helperText={helperText}
                 onChange={handlePasswordChange}
-                onKeyPress={handleKeyPress}
+                onKeyUp={handleKeyPress}
               />
             </div>
           </CardContent>
