@@ -2,11 +2,13 @@
 import React, { useState } from 'react';
 import { AxiosResponse } from 'axios';
 import { Button, CircularProgress } from '@material-ui/core';
+import Cookies from 'universal-cookie';
 import ErrorTable from './ErrorTable';
 import NavMenu from '../NavMenu/NavMenu';
 import ConfirmModal from '../Modals/ConfirmModal';
 import './ErrorPage.css';
 
+const cookies = new Cookies();
 const axios = require('axios').default;
 
 const CLEAR_ERROR_LIST_ENDPOINT = process.env.REACT_APP_ENDPOINT_ERRORS_CLEAR;
@@ -25,9 +27,11 @@ const ErrorPage = () => {
     setLoading(true);
     setButtonState(true);
     axios
-      .post(CLEAR_ERROR_LIST_ENDPOINT)
+      .delete(CLEAR_ERROR_LIST_ENDPOINT, {
+        headers: { Authorization: `Bearer ${cookies.get('token')}` },
+      })
       .then((response: AxiosResponse) => {
-        if (response.status === 200) {
+        if (response.status === 204) {
           setLoading(false);
           setClearTable(true);
           setResponseState('Error Log Cleared!');

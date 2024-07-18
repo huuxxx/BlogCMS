@@ -4,6 +4,10 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { CircularProgress } from '@material-ui/core';
 import { useTable } from 'react-table';
 import './ErrorTable.css';
+import Cookies from 'universal-cookie';
+import { formatDateLong } from '../../Helpers/StringHelpers';
+
+const cookies = new Cookies();
 
 const axios = require('axios').default;
 
@@ -23,6 +27,7 @@ const ErrorTable: React.FC<IProps> = ({ setButtonState, clearTable }) => {
       {
         Header: 'Date Logged',
         accessor: 'dateCreated',
+        Cell: ({ value }) => formatDateLong(value),
       },
       {
         Header: 'Stack Trace',
@@ -52,7 +57,9 @@ const ErrorTable: React.FC<IProps> = ({ setButtonState, clearTable }) => {
 
   useEffect(() => {
     axios
-      .get(GET_ERROR_LIST_ENDPOINT)
+      .get(GET_ERROR_LIST_ENDPOINT, {
+        headers: { Authorization: `Bearer ${cookies.get('token')}` },
+      })
       .then((response: AxiosResponse) => {
         if (response.status === 200) {
           setResponsedata(response.data);
