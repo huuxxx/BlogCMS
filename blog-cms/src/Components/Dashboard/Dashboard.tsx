@@ -10,12 +10,8 @@ const axios = require('axios').default;
 
 const GET_ANALYTICS_ENDPOINT = process.env.REACT_APP_ENDPOINT_GET_ANALYTICS;
 
-type AnalyticsResponseItem = {
-  totalVisits: number;
-};
-
 const Dashboard = () => {
-  const [responseData, setResponseData] = useState<AnalyticsResponseItem>();
+  const [responseData, setResponseData] = useState<number>();
 
   useEffect(() => {
     axios
@@ -33,7 +29,7 @@ const Dashboard = () => {
       <NavMenu />
       <div className="page-sub-parent">
         <h1>Dashboard</h1>
-        <span>Total site visits: {responseData?.totalVisits}</span>
+        <span>Total site visits: {responseData}</span>
         <VisitorChart />
         <VisitorsTable />
       </div>

@@ -27,6 +27,7 @@ const VisitorChart = () => {
   }, [responseData]);
 
   useEffect(() => {
+    console.log(GET_WEEK_VISITS_ENDPOINT);
     axios
       .get(GET_WEEK_VISITS_ENDPOINT)
       .then((response: AxiosResponse) => {

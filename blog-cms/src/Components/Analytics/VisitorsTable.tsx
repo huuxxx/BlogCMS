@@ -3,6 +3,7 @@ import { AxiosResponse } from 'axios';
 import React, { useEffect, useMemo, useState } from 'react';
 import { useTable } from 'react-table';
 import './VisitorsTable.css';
+import { formatDate, viewedResultToTick } from '../Helpers/StringHelpers';
 
 const axios = require('axios').default;
 
@@ -17,7 +18,7 @@ const VisitorsChart = () => {
     () => [
       {
         Header: 'Visitor IP',
-        accessor: 'visitorIP',
+        accessor: 'visitorIp',
       },
       {
         Header: 'Screen Width',
@@ -30,18 +31,22 @@ const VisitorsChart = () => {
       {
         Header: 'Date Visited',
         accessor: 'dateVisited',
+        Cell: ({ value }) => formatDate(value),
       },
       {
         Header: 'Blogs',
         accessor: 'viewedBlogs',
+        Cell: ({ value }) => viewedResultToTick(value),
       },
       {
         Header: 'Projects',
         accessor: 'viewedProjects',
+        Cell: ({ value }) => viewedResultToTick(value),
       },
       {
         Header: 'About',
         accessor: 'viewedAbout',
+        Cell: ({ value }) => viewedResultToTick(value),
       },
     ],
     []
@@ -57,10 +62,14 @@ const VisitorsChart = () => {
 
   useEffect(() => {
     axios
-      .post(GET_LAST_VISITORS_ENDPOINT)
+      .get(GET_LAST_VISITORS_ENDPOINT)
       .then((response: AxiosResponse) => {
         if (response.status === 200) {
-          setResponsedata(response.data);
+          const formattedData = response.data.map((item) => ({
+            ...item,
+            dateVisited: formatDate(item.dateVisited),
+          }));
+          setResponsedata(formattedData);
           setLoadingData(false);
         }
       })
