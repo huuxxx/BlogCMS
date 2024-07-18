@@ -28,16 +28,15 @@ const BlogEdit = ({ match }) => {
   const [buttonState, setButtonState] = useState(false);
   const [titleState, setTitleState] = useState('');
   const [showModal, setshowModal] = useState(false);
+  const [blogTags, setBlogTags] = useState(['']);
   const [editorState, setEditorState] = useState(() =>
     EditorState.createEmpty()
   );
+  const [blogId, setBlogId] = useState('');
 
   useEffect(() => {
     axios
-      .post(GET_BLOG_ENDPOINT, {
-        preventIncrement: true,
-        id: match.params.id,
-      })
+      .get(`${GET_BLOG_ENDPOINT}/${blogId}`, {})
       .then((response: AxiosResponse) => {
         if (response.status === 200) {
           setTitleState(response.data.title);
@@ -52,7 +51,11 @@ const BlogEdit = ({ match }) => {
       })
       .catch((error: string) => {});
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [blogId]);
+
+  useEffect(() => {
+    setBlogId(match.params.id);
+  }, [match.params.id]);
 
   function uploadImageCallBack(file) {
     return new Promise((resolve, reject) => {
@@ -76,12 +79,13 @@ const BlogEdit = ({ match }) => {
     const contentToHtml = convertToRaw(editorState.getCurrentContent());
     const markup = draftToHtml(contentToHtml);
     axios
-      .post(
+      .put(
         EDIT_BLOG_ENDPOINT,
         {
-          id: match.params.id,
+          id: blogId,
           title: titleState,
           content: markup,
+          tags: blogTags,
         },
         {
           headers: { Authorization: `Bearer ${cookies.get('token')}` },
@@ -108,10 +112,10 @@ const BlogEdit = ({ match }) => {
     setLoading(true);
     setButtonState(true);
     axios
-      .post(
+      .delete(
         DELETE_BLOG_ENDPOINT,
         {
-          id: match.params.id,
+          id: blogId,
         },
         {
           headers: { Authorization: `Bearer ${cookies.get('token')}` },

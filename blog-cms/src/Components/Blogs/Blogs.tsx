@@ -4,6 +4,7 @@ import { Link, useHistory } from 'react-router-dom';
 import { Button } from '@material-ui/core';
 import NavMenu from '../NavMenu/NavMenu';
 import './Blogs.css';
+import { formatDateDetailed } from '../../Helpers/StringHelpers';
 
 const axios = require('axios').default;
 
@@ -53,7 +54,8 @@ const Blogs = () => {
             <Link to={`editblog/${item.id}`}>
               <h3>{item.title}</h3>
             </Link>
-            <span>{item.dateCreated.split(' ')[0]}</span>
+            {/* <span>{item.dateCreated.split(' ')[0]}</span> */}
+            <span>{formatDateDetailed(item.dateCreated)}</span>
           </div>
         ))}
       </div>

@@ -56,6 +56,7 @@ const NewBlog = () => {
   const [loading, setLoading] = useState(false);
   const [successfulUpload, setSuccessfulUpload] = useState('');
   const [uploadDisabled, setUploadDisable] = useState(false);
+  const [blogTags, setBlogTags] = useState(['']);
 
   const [editorState, setEditorState] = useState(() =>
     EditorState.createEmpty()
@@ -135,6 +136,7 @@ const NewBlog = () => {
         {
           title: state.title,
           content: markup,
+          tags: blogTags,
         },
         {
           headers: { Authorization: `Bearer ${cookies.get('token')}` },
