@@ -3,7 +3,7 @@ import { AxiosResponse } from 'axios';
 import React, { useEffect, useMemo, useState } from 'react';
 import { useTable } from 'react-table';
 import './VisitorsTable.css';
-import { formatDate, viewedResultToTick } from '../Helpers/StringHelpers';
+import { formatDate, viewedResultToTick } from '../../Helpers/StringHelpers';
 
 const axios = require('axios').default;
 
