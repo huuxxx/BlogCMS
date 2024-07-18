@@ -11,7 +11,7 @@ const cookies = new Cookies();
 
 const axios = require('axios').default;
 
-const GET_ERROR_LIST_ENDPOINT = process.env.REACT_APP_ENDPOINT_ERRORS_GET_ALL;
+const ERROR_ENDPOINT = process.env.REACT_APP_ENDPOINT_ERRORS;
 
 interface IProps {
   setButtonState: (state: boolean) => void;
@@ -57,7 +57,7 @@ const ErrorTable: React.FC<IProps> = ({ setButtonState, clearTable }) => {
 
   useEffect(() => {
     axios
-      .get(GET_ERROR_LIST_ENDPOINT, {
+      .get(ERROR_ENDPOINT, {
         headers: { Authorization: `Bearer ${cookies.get('token')}` },
       })
       .then((response: AxiosResponse) => {

@@ -8,7 +8,7 @@ import { formatDateDetailed } from '../../Helpers/StringHelpers';
 
 const axios = require('axios').default;
 
-const GET_BLOGS_ENDPOINT = process.env.REACT_APP_ENDPOINT_BLOG_GET_ALL;
+const BLOGS_ENDPOINT = process.env.REACT_APP_ENDPOINT_BLOG;
 
 type BlogResponseItem = {
   id: number;
@@ -22,7 +22,7 @@ const Blogs = () => {
 
   useEffect(() => {
     axios
-      .get(GET_BLOGS_ENDPOINT)
+      .get(BLOGS_ENDPOINT)
       .then((response: AxiosResponse) => {
         if (response.status === 200) {
           setResponseData(response.data);

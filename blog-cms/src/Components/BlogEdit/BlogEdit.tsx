@@ -17,10 +17,8 @@ const cookies = new Cookies();
 
 const axios = require('axios').default;
 
-const DELETE_BLOG_ENDPOINT = process.env.REACT_APP_ENDPOINT_BLOG_DELETE;
-const EDIT_BLOG_ENDPOINT = process.env.REACT_APP_ENDPOINT_BLOG_EDIT;
-const GET_BLOG_ENDPOINT = process.env.REACT_APP_ENDPOINT_BLOG_GET;
-const IMAGE_UPLOAD_ENDPOINT = process.env.REACT_APP_ENDPOINT_IMAGE_UPLOAD;
+const BLOG_ENDPOINT = process.env.REACT_APP_ENDPOINT_BLOG;
+const IMAGE_ENDPOINT = process.env.REACT_APP_ENDPOINT_IMAGE;
 
 const BlogEdit = ({ match }) => {
   const [loading, setLoading] = useState(false);
@@ -36,7 +34,7 @@ const BlogEdit = ({ match }) => {
 
   useEffect(() => {
     axios
-      .get(`${GET_BLOG_ENDPOINT}/${blogId}`, {})
+      .get(`${BLOG_ENDPOINT}/${blogId}`, {})
       .then((response: AxiosResponse) => {
         if (response.status === 200) {
           setTitleState(response.data.title);
@@ -60,7 +58,7 @@ const BlogEdit = ({ match }) => {
   function uploadImageCallBack(file) {
     return new Promise((resolve, reject) => {
       const xhr = new XMLHttpRequest(); // eslint-disable-line no-undef
-      xhr.open('POST', IMAGE_UPLOAD_ENDPOINT!);
+      xhr.open('POST', IMAGE_ENDPOINT!);
       const data = new FormData(); // eslint-disable-line no-undef
       data.append('file', file);
       xhr.addEventListener('load', () => {
@@ -80,7 +78,7 @@ const BlogEdit = ({ match }) => {
     const markup = draftToHtml(contentToHtml);
     axios
       .put(
-        EDIT_BLOG_ENDPOINT,
+        BLOG_ENDPOINT,
         {
           id: blogId,
           title: titleState,
@@ -113,7 +111,7 @@ const BlogEdit = ({ match }) => {
     setButtonState(true);
     axios
       .delete(
-        DELETE_BLOG_ENDPOINT,
+        BLOG_ENDPOINT,
         {
           id: blogId,
         },

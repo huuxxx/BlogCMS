@@ -15,8 +15,8 @@ const cookies = new Cookies();
 
 const axios = require('axios').default;
 
-const CREATE_BLOG_ENDPOINT = process.env.REACT_APP_ENDPOINT_BLOG_CREATE;
-const IMAGE_UPLOAD_ENDPOINT = process.env.REACT_APP_ENDPOINT_IMAGE_UPLOAD;
+const BLOG_ENDPOINT = process.env.REACT_APP_ENDPOINT_BLOG;
+const IMAGE_ENDPOINT = process.env.REACT_APP_ENDPOINT_IMAGE;
 
 type State = {
   title: string;
@@ -84,7 +84,7 @@ const NewBlog = () => {
       data.append('name', 'name');
       //   const formHeaders = data.getHeaders();
       axios
-        .post(IMAGE_UPLOAD_ENDPOINT, {
+        .post(IMAGE_ENDPOINT, {
           file: data,
           headers: {
             // Authorization: `Bearer ${cookies.get('token')}`,
@@ -110,8 +110,7 @@ const NewBlog = () => {
       const xhr = new XMLHttpRequest(); // eslint-disable-line no-undef
       xhr.open(
         'POST',
-        IMAGE_UPLOAD_ENDPOINT ??
-          'https://blogapi.huxdev.com/api/Blog/UploadImage'
+        IMAGE_ENDPOINT ?? 'https://blogapi.huxdev.com/api/Blog/UploadImage'
       );
       const data = new FormData(); // eslint-disable-line no-undef
       data.append('file', file);
@@ -132,7 +131,7 @@ const NewBlog = () => {
     const markup = draftToHtml(contentToHtml);
     axios
       .post(
-        CREATE_BLOG_ENDPOINT,
+        BLOG_ENDPOINT,
         {
           title: state.title,
           content: markup,

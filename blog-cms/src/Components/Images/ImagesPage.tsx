@@ -6,14 +6,14 @@ import './ImagesPage.css';
 
 const axios = require('axios').default;
 
-const GET_IMAGES_ENDPOINT = process.env.REACT_APP_ENDPOINT_IMAGES_GET_ALL;
+const IMAGES_ENDPOINT = process.env.REACT_APP_ENDPOINT_IMAGES;
 
 const ImagesPage = () => {
   const [responseData, setResponseData] = useState<[string]>();
 
   useEffect(() => {
     axios
-      .get(GET_IMAGES_ENDPOINT)
+      .get(IMAGES_ENDPOINT)
       .then((response: AxiosResponse) => {
         if (response.status === 200) {
           setResponseData(response.data);

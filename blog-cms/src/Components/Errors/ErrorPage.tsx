@@ -11,7 +11,7 @@ import './ErrorPage.css';
 const cookies = new Cookies();
 const axios = require('axios').default;
 
-const CLEAR_ERROR_LIST_ENDPOINT = process.env.REACT_APP_ENDPOINT_ERRORS_CLEAR;
+const ERROR_ENDPOINT = process.env.REACT_APP_ENDPOINT_ERRORS;
 
 const ErrorPage = () => {
   const [loading, setLoading] = useState(false);
@@ -27,7 +27,7 @@ const ErrorPage = () => {
     setLoading(true);
     setButtonState(true);
     axios
-      .delete(CLEAR_ERROR_LIST_ENDPOINT, {
+      .delete(ERROR_ENDPOINT, {
         headers: { Authorization: `Bearer ${cookies.get('token')}` },
       })
       .then((response: AxiosResponse) => {
