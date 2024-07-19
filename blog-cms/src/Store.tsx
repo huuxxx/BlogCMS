@@ -6,10 +6,12 @@ export type GlobalStore = {
   userName: string;
   setUserName: (c: string) => void;
 };
+
 export const Store = createContext<GlobalStore>({
   isLoggedIn: false,
   setIsLoggedIn: () => {},
   userName: '',
   setUserName: () => {},
 });
+
 export const useGlobalContext = () => useContext(Store);
