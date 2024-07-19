@@ -35,7 +35,7 @@ const NavMenu = () => {
               variant="contained"
               size="small"
               color="inherit"
-              onClick={() => history.push('/app/dashboard')}
+              onClick={() => history.push('/dashboard')}
               style={{ marginTop: '25px', minWidth: '80px' }}
             >
               Home
@@ -44,7 +44,7 @@ const NavMenu = () => {
               variant="contained"
               size="small"
               color="inherit"
-              onClick={() => history.push('/app/blogs')}
+              onClick={() => history.push('/blogs')}
               style={{ marginTop: '5px', minWidth: '80px' }}
             >
               Blogs
@@ -53,7 +53,7 @@ const NavMenu = () => {
               variant="contained"
               size="small"
               color="inherit"
-              onClick={() => history.push('/app/images')}
+              onClick={() => history.push('/images')}
               style={{ marginTop: '5px', minWidth: '80px' }}
             >
               Images
@@ -62,7 +62,7 @@ const NavMenu = () => {
               variant="contained"
               size="small"
               color="inherit"
-              onClick={() => history.push('/app/errors')}
+              onClick={() => history.push('/errors')}
               style={{
                 marginTop: '5px',
                 marginBottom: '25px',

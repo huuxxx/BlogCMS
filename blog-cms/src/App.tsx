@@ -23,12 +23,12 @@ export default function App() {
         >
           <Route path="/" exact component={Login} />
           <Switch>
-            <PrivateRoute path="/app/newblog" exact component={NewBlog} />
-            <PrivateRoute path="/app/blogs" exact component={Blogs} />
-            <PrivateRoute path="/app/editblog/:id" component={BlogEdit} />
-            <PrivateRoute path="/app/dashboard" exact component={Dashboard} />
-            <PrivateRoute path="/app/errors" exact component={ErrorPage} />
-            <PrivateRoute path="/app/images" exact component={ImagesPage} />
+            <PrivateRoute path="/newblog" exact component={NewBlog} />
+            <PrivateRoute path="/blogs" exact component={Blogs} />
+            <PrivateRoute path="/editblog/:id" component={BlogEdit} />
+            <PrivateRoute path="/dashboard" exact component={Dashboard} />
+            <PrivateRoute path="/errors" exact component={ErrorPage} />
+            <PrivateRoute path="/images" exact component={ImagesPage} />
           </Switch>
         </Store.Provider>
       </div>

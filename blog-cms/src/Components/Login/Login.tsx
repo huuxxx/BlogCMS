@@ -39,7 +39,7 @@ const Login = () => {
           setLoggedInUserName(userNameForm);
           const obj = response.data;
           cookies.set('token', obj.token);
-          history.push('/app/dashboard');
+          history.push('/dashboard');
         }
       })
       .catch((error) => {
