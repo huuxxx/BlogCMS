@@ -40,7 +40,7 @@ const Blogs = () => {
           variant="contained"
           size="small"
           color="inherit"
-          onClick={() => history.push('/app/newblog')}
+          onClick={() => history.push('/newblog')}
           style={{ marginTop: '25px' }}
         >
           + Create Blog
@@ -54,7 +54,6 @@ const Blogs = () => {
             <Link to={`editblog/${item.id}`}>
               <h3>{item.title}</h3>
             </Link>
-            {/* <span>{item.dateCreated.split(' ')[0]}</span> */}
             <span>{formatDateDetailed(item.dateCreated)}</span>
           </div>
         ))}
