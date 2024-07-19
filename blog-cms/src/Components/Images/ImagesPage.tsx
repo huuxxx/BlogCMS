@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { AxiosResponse } from 'axios';
+import Cookies from 'universal-cookie';
 import ImageTile from './ImageTile';
 import NavMenu from '../NavMenu/NavMenu';
 import './ImagesPage.css';
 
+const cookies = new Cookies();
 const axios = require('axios').default;
 
 const IMAGES_ENDPOINT = process.env.REACT_APP_ENDPOINT_IMAGES;
@@ -13,7 +15,9 @@ const ImagesPage = () => {
 
   useEffect(() => {
     axios
-      .get(IMAGES_ENDPOINT)
+      .get(IMAGES_ENDPOINT, {
+        headers: { Authorization: `Bearer ${cookies.get('token')}` },
+      })
       .then((response: AxiosResponse) => {
         if (response.status === 200) {
           setResponseData(response.data);

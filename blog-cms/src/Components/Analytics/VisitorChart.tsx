@@ -2,7 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { VictoryChart, VictoryBar, VictoryAxis, VictoryLabel } from 'victory';
 import './VisitorChart.css';
 import { AxiosResponse } from 'axios';
+import Cookies from 'universal-cookie';
 
+const cookies = new Cookies();
 const axios = require('axios').default;
 
 const GET_WEEK_VISITS_ENDPOINT = process.env.REACT_APP_ENDPOINT_GET_WEEK_VISITS;
@@ -28,7 +30,9 @@ const VisitorChart = () => {
 
   useEffect(() => {
     axios
-      .get(GET_WEEK_VISITS_ENDPOINT)
+      .get(GET_WEEK_VISITS_ENDPOINT, {
+        headers: { Authorization: `Bearer ${cookies.get('token')}` },
+      })
       .then((response: AxiosResponse) => {
         if (response.status === 200) {
           setResponseData(response.data);

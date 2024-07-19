@@ -1,10 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
 import { AxiosResponse } from 'axios';
+import Cookies from 'universal-cookie';
 import VisitorsTable from '../Analytics/VisitorsTable';
 import VisitorChart from '../Analytics/VisitorChart';
 import NavMenu from '../NavMenu/NavMenu';
 import './Dashboard.css';
+
+const cookies = new Cookies();
 
 const axios = require('axios').default;
 
@@ -15,7 +18,9 @@ const Dashboard = () => {
 
   useEffect(() => {
     axios
-      .get(GET_ANALYTICS_ENDPOINT)
+      .get(GET_ANALYTICS_ENDPOINT, {
+        headers: { Authorization: `Bearer ${cookies.get('token')}` },
+      })
       .then((response: AxiosResponse) => {
         if (response.status === 200) {
           setResponseData(response.data);
