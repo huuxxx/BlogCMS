@@ -7,7 +7,6 @@ import Cookies from 'universal-cookie';
 import { formatDate, viewedResultToTick } from '../../Helpers/StringHelpers';
 
 const cookies = new Cookies();
-const token = cookies.get('token');
 const axios = require('axios').default;
 
 const GET_LAST_VISITORS_ENDPOINT =
@@ -66,7 +65,7 @@ const VisitorsChart = () => {
   useEffect(() => {
     axios
       .get(GET_LAST_VISITORS_ENDPOINT, {
-        headers: { Authorization: `Bearer ${token}` },
+        headers: { Authorization: `Bearer ${cookies.get('token')}` },
       })
       .then((response: AxiosResponse) => {
         if (response.status === 200) {
