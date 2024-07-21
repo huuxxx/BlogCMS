@@ -62,22 +62,22 @@ const BlogEditor: React.FC<Props> = ({ blogId, editBlog }) => {
   }, [blogId]);
 
   function uploadImageCallBack(file) {
+    const formData = new FormData();
+    formData.append('file', file);
+
     return new Promise((resolve, reject) => {
-      const xhr = new XMLHttpRequest(); // eslint-disable-line no-undef
-      xhr.open('POST', IMAGE_ENDPOINT!);
-      xhr.setRequestHeader('Authorization', `Bearer ${token}`);
-
-      const data = new FormData(); // eslint-disable-line no-undef
-      data.append('file', file);
-
-      xhr.addEventListener('load', () => {
-        resolve({ data: { link: xhr.responseText } });
-      });
-      xhr.addEventListener('error', () => {
-        reject();
-      });
-
-      xhr.send(data);
+      axios
+        .post(IMAGE_ENDPOINT!, formData, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then((response) => {
+          resolve({ data: { link: response.data } });
+        })
+        .catch((error) => {
+          reject(error);
+        });
     });
   }
 
