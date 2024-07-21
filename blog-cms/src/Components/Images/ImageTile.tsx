@@ -25,15 +25,9 @@ const ImageTile: React.FC<Props> = ({ imageId }) => {
     setLoading(true);
     setButtonState(true);
     axios
-      .delete(
-        IMAGE_ENDPOINT,
-        {
-          id: imageId,
-        },
-        {
-          headers: { Authorization: `Bearer ${cookies.get('token')}` },
-        }
-      )
+      .delete(`${IMAGE_ENDPOINT}/${imageId}`, {
+        headers: { Authorization: `Bearer ${cookies.get('token')}` },
+      })
       .then((response: AxiosResponse) => {
         if (response.status === 200) {
           setLoading(false);

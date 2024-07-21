@@ -150,15 +150,9 @@ const BlogEditor: React.FC<Props> = ({ blogId, editBlog }) => {
     setLoading(true);
     setButtonState(true);
     axios
-      .delete(
-        BLOG_ENDPOINT,
-        {
-          id: blogId,
-        },
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      )
+      .delete(`${BLOG_ENDPOINT}/${blogId}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
       .then((response: AxiosResponse) => {
         if (response.status === 200) {
           setLoading(false);
