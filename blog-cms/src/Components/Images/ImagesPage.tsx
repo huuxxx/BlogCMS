@@ -8,7 +8,7 @@ import './ImagesPage.css';
 const cookies = new Cookies();
 const axios = require('axios').default;
 
-const IMAGES_ENDPOINT = process.env.REACT_APP_ENDPOINT_IMAGES;
+const IMAGES_ENDPOINT = process.env.REACT_APP_ENDPOINT_IMAGE;
 
 const ImagesPage = () => {
   const [responseData, setResponseData] = useState<[string]>();
@@ -19,6 +19,7 @@ const ImagesPage = () => {
         headers: { Authorization: `Bearer ${cookies.get('token')}` },
       })
       .then((response: AxiosResponse) => {
+        console.log('response: ', response);
         if (response.status === 200) {
           setResponseData(response.data);
         }
@@ -35,7 +36,7 @@ const ImagesPage = () => {
         <div className="images-page-item-container">
           {responseData?.map((item) => (
             <div key={item}>
-              <ImageTile item={item} />
+              <ImageTile imageId={item} />
             </div>
           ))}
         </div>

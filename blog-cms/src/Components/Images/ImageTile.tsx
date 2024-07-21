@@ -5,16 +5,17 @@ import Cookies from 'universal-cookie';
 import ConfirmModal from '../Modals/ConfirmModal';
 import './ImageTile.css';
 
-const DELETE_BLOG_ENDPOINT = process.env.REACT_APP_ENDPOINT_IMAGE_DELETE;
+const IMAGE_ENDPOINT = process.env.REACT_APP_ENDPOINT_IMAGE;
+const API_IMAGE_URL = process.env.REACT_APP_API_IMAGES_URL;
 
 const cookies = new Cookies();
 const axios = require('axios').default;
 
-interface IProps {
-  item: string;
+interface Props {
+  imageId: string;
 }
 
-const ImageTile: React.FC<IProps> = ({ item }) => {
+const ImageTile: React.FC<Props> = ({ imageId }) => {
   const [loading, setLoading] = useState(false);
   const [imageDeleted, setImageDeleted] = useState(false);
   const [buttonState, setButtonState] = useState(false);
@@ -24,10 +25,10 @@ const ImageTile: React.FC<IProps> = ({ item }) => {
     setLoading(true);
     setButtonState(true);
     axios
-      .post(
-        DELETE_BLOG_ENDPOINT,
+      .delete(
+        IMAGE_ENDPOINT,
         {
-          id: item,
+          id: imageId,
         },
         {
           headers: { Authorization: `Bearer ${cookies.get('token')}` },
@@ -56,9 +57,9 @@ const ImageTile: React.FC<IProps> = ({ item }) => {
       <img
         src={
           // eslint-disable-next-line prefer-template
-          'https://blogapi.huxdev.com/Images/' + item
+          `${API_IMAGE_URL}/${imageId}`
         }
-        alt={item}
+        alt={imageId}
         width="200px"
         height="200px"
         style={{ border: 'solid' }}
