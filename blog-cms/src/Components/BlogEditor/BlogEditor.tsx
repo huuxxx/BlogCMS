@@ -43,7 +43,9 @@ const BlogEditor: React.FC<Props> = ({ blogId, editBlog }) => {
     }
 
     axios
-      .get(`${BLOG_ENDPOINT}/${blogId}`)
+      .get(`${BLOG_ENDPOINT}/${blogId}`, {
+        increment: false,
+      })
       .then((response: AxiosResponse) => {
         if (response.status === 200) {
           setTitleState(response.data.title);
