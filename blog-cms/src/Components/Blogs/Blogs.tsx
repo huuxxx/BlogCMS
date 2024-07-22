@@ -5,6 +5,7 @@ import { Button } from '@material-ui/core';
 import NavMenu from '../NavMenu/NavMenu';
 import './Blogs.css';
 import { formatDateDetailed } from '../../Helpers/StringHelpers';
+import { TablePagination } from '@material-ui/core';
 
 const axios = require('axios').default;
 
@@ -19,17 +20,37 @@ type BlogResponseItem = {
 const Blogs = () => {
   const [responseData, setResponseData] = useState<BlogResponseItem[]>();
   const history = useHistory();
+  const [count, setCount] = useState(0);
+  const [page, setPage] = useState(0);
+  const [pageSize] = useState(10);
+  const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
+const getBlogs = () => {
     axios
-      .get(BLOGS_ENDPOINT)
+      .get(BLOGS_ENDPOINT, {
+        params: {
+            page: page,
+            pageSize: pageSize,
+          },
+      })
       .then((response: AxiosResponse) => {
         if (response.status === 200) {
-          setResponseData(response.data);
+          setResponseData(response.data.blogs);
+          setCount(response.data.count);
+          setLoading(false);
         }
       })
       .catch((error: string) => {});
-  }, []);
+}
+
+  useEffect(() => {
+    getBlogs();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [page]);
 
   return (
     <div className="page-parent">
@@ -49,7 +70,7 @@ const Blogs = () => {
           <div
             key={item.id.toString()}
             className="blogs-container"
-            style={{ marginBottom: '3em' }}
+            style={{ marginBottom: '1em' }}
           >
             <Link to={`editblog/${item.id}`}>
               <h3>{item.title}</h3>
@@ -57,6 +78,16 @@ const Blogs = () => {
             <span>{formatDateDetailed(item.dateCreated)}</span>
           </div>
         ))}
+        {!loading &&
+            <TablePagination
+                component="div"
+                count={count}
+                page={page}
+                onPageChange={handleChangePage}
+                rowsPerPage={pageSize}
+                rowsPerPageOptions={[ 10 ]}
+            />
+        }
       </div>
     </div>
   );
