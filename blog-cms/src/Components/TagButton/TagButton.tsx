@@ -41,6 +41,9 @@ const TagButton: React.FC<Props> = ({
         onChange={handleToggle}
         size="small"
         disabled={disabled}
+        sx={{
+          textTransform: 'none',
+        }}
       >
         {tagName}
       </ToggleButton>
