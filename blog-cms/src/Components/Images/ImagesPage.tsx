@@ -19,7 +19,6 @@ const ImagesPage = () => {
         headers: { Authorization: `Bearer ${cookies.get('token')}` },
       })
       .then((response: AxiosResponse) => {
-        console.log('response: ', response);
         if (response.status === 200) {
           setResponseData(response.data);
         }
