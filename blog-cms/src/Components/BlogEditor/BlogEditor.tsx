@@ -10,6 +10,7 @@ import ConfirmModal from '../Modals/ConfirmModal';
 import './BlogEditor.css';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import { Button, CircularProgress, TextField } from '@mui/material';
+import TagButton from '../TagButton/TagButton';
 
 const cookies = new Cookies();
 const token = cookies.get('token');
@@ -18,6 +19,7 @@ const axios = require('axios').default;
 
 const BLOG_ENDPOINT = process.env.REACT_APP_ENDPOINT_BLOG;
 const IMAGE_ENDPOINT = process.env.REACT_APP_ENDPOINT_IMAGE;
+const TAGS_ENDPOINT = process.env.REACT_APP_ENDPOINT_TAGS;
 
 interface Props {
   blogId?: string;
@@ -31,11 +33,21 @@ const BlogEditor: React.FC<Props> = ({ blogId, editBlog }) => {
   const [titleState, setTitleState] = useState('');
   const [showModal, setshowModal] = useState(false);
   const [blogTags, setBlogTags] = useState(['']);
+  const [allTags, setAllTags] = useState(['']);
   const [editorState, setEditorState] = useState(() =>
     EditorState.createEmpty()
   );
 
   useEffect(() => {
+    axios
+      .get(TAGS_ENDPOINT)
+      .then((response: AxiosResponse) => {
+        if (response.status === 200) {
+          setAllTags(response.data);
+        }
+      })
+      .catch((error: string) => {});
+
     if (!editBlog) {
       return;
     }
@@ -172,6 +184,14 @@ const BlogEditor: React.FC<Props> = ({ blogId, editBlog }) => {
     setTitleState(event.target.value);
   };
 
+  const handleAddTag = (tag: string) => {
+    setBlogTags((prevTags) => [...prevTags, tag]);
+  };
+
+  const handleRemoveTag = (tag: string) => {
+    setBlogTags((prevTags) => prevTags.filter((t) => t !== tag));
+  };
+
   return (
     <div style={{ marginBottom: 50, marginLeft: 50 }}>
       <NavMenu />
@@ -207,29 +227,44 @@ const BlogEditor: React.FC<Props> = ({ blogId, editBlog }) => {
             },
           }}
         />
-        <Button
-          style={{ marginRight: '5px' }}
-          variant="contained"
-          size="large"
-          color="primary"
-          className="submitBtn"
-          onClick={editBlog ? handleEditBlog : handleCreateBlog}
-          disabled={buttonState}
-        >
-          {editBlog ? 'Update' : 'Create'}
-        </Button>
-        {editBlog && (
+
+        {allTags
+          ?.filter((tag) => tag.trim() !== '')
+          .map((item) => (
+            <TagButton
+              tagName={item}
+              isSelected={blogTags.includes(item)}
+              onAddTag={handleAddTag}
+              onRemoveTag={handleRemoveTag}
+              disabled={buttonState}
+            ></TagButton>
+          ))}
+
+        <div style={{ marginTop: '20px' }}>
           <Button
+            style={{ marginRight: '5px' }}
             variant="contained"
             size="large"
-            color="secondary"
+            color="primary"
             className="submitBtn"
-            onClick={deleteButton}
+            onClick={editBlog ? handleEditBlog : handleCreateBlog}
             disabled={buttonState}
           >
-            Delete
+            {editBlog ? 'Update' : 'Create'}
           </Button>
-        )}
+          {editBlog && (
+            <Button
+              variant="contained"
+              size="large"
+              color="secondary"
+              className="submitBtn"
+              onClick={deleteButton}
+              disabled={buttonState}
+            >
+              Delete
+            </Button>
+          )}
+        </div>
       </form>
       <div className="uploadStatus">{responseState}</div>
       <div className="loadingSpinner">
