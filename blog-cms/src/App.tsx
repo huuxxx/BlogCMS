@@ -11,6 +11,7 @@ import ImagesPage from './Components/Images/ImagesPage';
 import { Store } from './Store';
 import './Global.css';
 import './App.css';
+import TagManager from './Components/TagManager/TagManager';
 
 export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
@@ -29,6 +30,7 @@ export default function App() {
             <PrivateRoute path="/dashboard" exact component={Dashboard} />
             <PrivateRoute path="/errors" exact component={ErrorPage} />
             <PrivateRoute path="/images" exact component={ImagesPage} />
+            <PrivateRoute path="/tags" exact component={TagManager} />
           </Switch>
         </Store.Provider>
       </div>

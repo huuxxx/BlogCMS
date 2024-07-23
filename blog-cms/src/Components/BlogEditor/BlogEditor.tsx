@@ -232,6 +232,7 @@ const BlogEditor: React.FC<Props> = ({ blogId, editBlog }) => {
           ?.filter((tag) => tag.trim() !== '')
           .map((item) => (
             <TagButton
+              key={item}
               tagName={item}
               isSelected={blogTags.includes(item)}
               onAddTag={handleAddTag}
