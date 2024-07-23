@@ -33,9 +33,9 @@
     "web-vitals": "^1.1.1"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
+    "start": "cross-env NODE_OPTIONS=--openssl-legacy-provider react-scripts start",
+    "build": "cross-env NODE_OPTIONS=--openssl-legacy-provider react-scripts build",
+    "test": "cross-env NODE_OPTIONS=--openssl-legacy-provider react-scripts test",
     "eject": "react-scripts eject",
     "lint": "eslint --ext .js,.jsx,.ts,.tsx src --color",
     "format": "prettier --write 'src/**/*.{ts,tsx,scss,css,json}'",
@@ -62,6 +62,7 @@
   "devDependencies": {
     "@types/react-router-dom": "^5.1.7",
     "babel-eslint": "10.1.0",
+    "cross-env": "^7.0.3",
     "eslint-config-google": "^0.14.0",
     "eslint-config-prettier": "8.3.0",
     "eslint-config-react-app": "6.0.0",
