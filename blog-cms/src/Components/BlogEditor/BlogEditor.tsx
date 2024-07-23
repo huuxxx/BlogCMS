@@ -1,17 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { AxiosResponse } from 'axios';
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
 import Cookies from 'universal-cookie';
 import { Editor } from 'react-draft-wysiwyg';
 import { EditorState, convertToRaw, ContentState } from 'draft-js';
-import { CircularProgress } from '@material-ui/core';
 import draftToHtml from 'draftjs-to-html';
 import htmlToDraft from 'html-to-draftjs';
 import NavMenu from '../NavMenu/NavMenu';
 import ConfirmModal from '../Modals/ConfirmModal';
 import './BlogEditor.css';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+import { Button, CircularProgress, TextField } from '@mui/material';
 
 const cookies = new Cookies();
 const token = cookies.get('token');

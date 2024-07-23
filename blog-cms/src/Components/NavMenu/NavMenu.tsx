@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { Redirect, useHistory } from 'react-router-dom';
-import Button from '@material-ui/core/Button';
 import Cookies from 'universal-cookie';
 import { Visible } from 'react-grid-system';
 import { useGlobalContext } from '../../Store';
 import MenuModal from '../Modals/MenuModal';
 import './NavMenu.css';
+import { Button } from '@mui/material';
 
 const cookies = new Cookies();
 

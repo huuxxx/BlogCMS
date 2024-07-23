@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { AxiosResponse } from 'axios';
 import { Link, useHistory } from 'react-router-dom';
-import { Button } from '@material-ui/core';
 import NavMenu from '../NavMenu/NavMenu';
 import './Blogs.css';
 import { formatDateDetailed } from '../../Helpers/StringHelpers';
-import { TablePagination } from '@material-ui/core';
+import { Button, TablePagination } from '@mui/material';
 
 const axios = require('axios').default;
 
@@ -63,7 +62,6 @@ const Blogs = () => {
             size="small"
             color="inherit"
             onClick={() => history.push('/newblog')}
-            //   style={{ marginTop: '10px' }}
           >
             + Create Blog
           </Button>

@@ -1,10 +1,10 @@
 import React from 'react';
 import Modal from 'react-modal';
-import Button from '@material-ui/core/Button';
 import { Redirect, useHistory } from 'react-router-dom';
 import Cookies from 'universal-cookie';
 import { useGlobalContext } from '../../Store';
 import './MenuModal.css';
+import { Button } from '@mui/material';
 
 const cookies = new Cookies();
 

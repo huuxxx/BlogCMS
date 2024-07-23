@@ -1,11 +1,11 @@
 /* eslint-disable react/jsx-key */
 import { AxiosResponse } from 'axios';
 import React, { useEffect, useMemo, useState } from 'react';
-import { CircularProgress } from '@material-ui/core';
 import { useTable } from 'react-table';
 import './ErrorTable.css';
 import Cookies from 'universal-cookie';
 import { formatDateLong } from '../../Helpers/StringHelpers';
+import { CircularProgress } from '@mui/material';
 
 const cookies = new Cookies();
 

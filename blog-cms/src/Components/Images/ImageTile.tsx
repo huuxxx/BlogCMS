@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { Button, CircularProgress } from '@material-ui/core';
 import { AxiosResponse } from 'axios';
 import Cookies from 'universal-cookie';
 import ConfirmModal from '../Modals/ConfirmModal';
 import './ImageTile.css';
+import { Button, CircularProgress } from '@mui/material';
 
 const IMAGE_ENDPOINT = process.env.REACT_APP_ENDPOINT_IMAGE;
 const API_IMAGE_URL = process.env.REACT_APP_API_IMAGES_URL;

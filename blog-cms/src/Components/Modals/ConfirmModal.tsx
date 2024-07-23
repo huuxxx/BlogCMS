@@ -1,7 +1,7 @@
 import React from 'react';
 import Modal from 'react-modal';
-import Button from '@material-ui/core/Button';
 import './ConfirmModal.css';
+import { Button } from '@mui/material';
 
 Modal.setAppElement('#root');
 

@@ -1,12 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState } from 'react';
 import { AxiosResponse } from 'axios';
-import { Button, CircularProgress } from '@material-ui/core';
 import Cookies from 'universal-cookie';
 import ErrorTable from './ErrorTable';
 import NavMenu from '../NavMenu/NavMenu';
 import ConfirmModal from '../Modals/ConfirmModal';
 import './ErrorPage.css';
+import { Button, CircularProgress } from '@mui/material';
 
 const cookies = new Cookies();
 const axios = require('axios').default;

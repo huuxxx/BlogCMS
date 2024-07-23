@@ -1,15 +1,17 @@
 import React, { useState } from 'react';
-import TextField from '@material-ui/core/TextField';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import CardActions from '@material-ui/core/CardActions';
-import CardHeader from '@material-ui/core/CardHeader';
-import Button from '@material-ui/core/Button';
 import { useHistory } from 'react-router-dom';
 import './Login.css';
 import Cookies from 'universal-cookie';
-import { CircularProgress } from '@material-ui/core';
 import { useGlobalContext } from '../../Store';
+import {
+  Button,
+  Card,
+  CardActions,
+  CardContent,
+  CardHeader,
+  CircularProgress,
+  TextField,
+} from '@mui/material';
 
 const cookies = new Cookies();
 const axios = require('axios').default;
