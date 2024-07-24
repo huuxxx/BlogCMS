@@ -4,6 +4,7 @@ import NavMenu from '../NavMenu/NavMenu';
 import TagButton from '../TagButton/TagButton';
 import { Button, TextField } from '@mui/material';
 import Cookies from 'universal-cookie';
+import ConfirmModal from '../Modals/ConfirmModal';
 
 const cookies = new Cookies();
 const token = cookies.get('token');
@@ -18,6 +19,8 @@ const TagManager = () => {
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [newTag, setNewTag] = useState('');
   const [addDisabled, setAddDisabled] = useState(true);
+  const [showModal, setShowModal] = useState(false);
+  const [deleteDisabled, setDeleteDisabled] = useState(true);
 
   useEffect(() => {
     getTags();
@@ -43,6 +46,14 @@ const TagManager = () => {
     setSelectedTags((prevTags) => prevTags.filter((t) => t !== tag));
   };
 
+  useEffect(() => {
+    if (selectedTags.length > 0) {
+      setDeleteDisabled(false);
+    } else {
+      setDeleteDisabled(true);
+    }
+  }, [selectedTags]);
+
   const uploadTag = () => {
     axios
       .post(
@@ -62,6 +73,10 @@ const TagManager = () => {
         }
       })
       .catch((error: string) => {});
+  };
+
+  const deleteButton = () => {
+    setShowModal(!showModal);
   };
 
   const deleteTags = () => {
@@ -94,6 +109,12 @@ const TagManager = () => {
     <div className="page-parent">
       <div className="page-sub-parent">
         <NavMenu />
+        <ConfirmModal
+          confirmButton={deleteTags}
+          show={showModal}
+          setShow={setShowModal}
+          message={`Delete Tag${selectedTags.length > 1 ? 's' : ''}?`}
+        />
         <div>
           <h1>Tags</h1>
         </div>
@@ -138,8 +159,8 @@ const TagManager = () => {
             size="large"
             color="error"
             className="submitBtn"
-            onClick={deleteTags}
-            disabled={false}
+            onClick={deleteButton}
+            disabled={deleteDisabled}
           >
             Delete
           </Button>

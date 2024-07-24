@@ -31,7 +31,7 @@ const BlogEditor: React.FC<Props> = ({ blogId, editBlog }) => {
   const [responseState, setResponseState] = useState('');
   const [buttonState, setButtonState] = useState(false);
   const [titleState, setTitleState] = useState('');
-  const [showModal, setshowModal] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   const [blogTags, setBlogTags] = useState(['']);
   const [allTags, setAllTags] = useState(['']);
   const [editorState, setEditorState] = useState(() =>
@@ -155,7 +155,7 @@ const BlogEditor: React.FC<Props> = ({ blogId, editBlog }) => {
   };
 
   const deleteButton = () => {
-    setshowModal(true);
+    setShowModal(true);
   };
 
   const handleDeleteBlog = () => {
@@ -198,7 +198,7 @@ const BlogEditor: React.FC<Props> = ({ blogId, editBlog }) => {
       <ConfirmModal
         confirmButton={handleDeleteBlog}
         show={showModal}
-        setShow={setshowModal}
+        setShow={setShowModal}
         message="Delete Blog?"
       />
       <form className="formParent" noValidate autoComplete="off">
