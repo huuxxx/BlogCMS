@@ -88,7 +88,7 @@ const TagManager = () => {
       .then((response: AxiosResponse) => {
         if (response.status === 200) {
           getTags();
-          setSelectedTags(['']);
+          setSelectedTags([]);
         }
       })
       .catch((error: string) => {});
