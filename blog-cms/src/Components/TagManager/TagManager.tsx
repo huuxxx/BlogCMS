@@ -126,7 +126,7 @@ const TagManager = () => {
           <Button
             variant="contained"
             size="large"
-            color="secondary"
+            color="error"
             className="submitBtn"
             onClick={deleteTags}
             disabled={false}

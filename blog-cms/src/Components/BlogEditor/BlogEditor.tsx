@@ -257,7 +257,7 @@ const BlogEditor: React.FC<Props> = ({ blogId, editBlog }) => {
             <Button
               variant="contained"
               size="large"
-              color="secondary"
+              color="error"
               className="submitBtn"
               onClick={deleteButton}
               disabled={buttonState}

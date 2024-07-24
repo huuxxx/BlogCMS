@@ -62,7 +62,7 @@ const ImageTile: React.FC<Props> = ({ imageId }) => {
       <Button
         variant="contained"
         size="large"
-        color="secondary"
+        color="error"
         style={{ marginTop: '55px', marginLeft: '-150px' }}
         onClick={() => setshowModal(true)}
         disabled={buttonState}

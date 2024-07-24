@@ -59,7 +59,7 @@ const ErrorPage = () => {
           <Button
             variant="contained"
             size="large"
-            color="secondary"
+            color="error"
             onClick={clearButton}
             disabled={buttonState}
           >
