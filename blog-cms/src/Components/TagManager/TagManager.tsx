@@ -14,9 +14,10 @@ const TAGS_ENDPOINT = process.env.REACT_APP_ENDPOINT_TAGS;
 
 const TagManager = () => {
   //   const [loading, setLoading] = useState(true);
-  const [allTags, setAllTags] = useState(['']);
-  const [selectedTags, setSelectedTags] = useState(['']);
+  const [allTags, setAllTags] = useState<string[]>([]);
+  const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [newTag, setNewTag] = useState('');
+  const [addDisabled, setAddDisabled] = useState(true);
 
   useEffect(() => {
     getTags();
@@ -55,6 +56,8 @@ const TagManager = () => {
       )
       .then((response: AxiosResponse) => {
         if (response.status === 200) {
+          setNewTag('');
+          setAddDisabled(true);
           getTags();
         }
       })
@@ -80,6 +83,11 @@ const TagManager = () => {
     event
   ) => {
     setNewTag(event.target.value);
+    if (allTags.includes(event.target.value) || event.target.value === '') {
+      setAddDisabled(true);
+    } else {
+      setAddDisabled(false);
+    }
   };
 
   return (
@@ -97,6 +105,7 @@ const TagManager = () => {
             variant="outlined"
             style={{ marginRight: '5px' }}
             onChange={handleNewTagChange}
+            value={newTag}
           />
           <Button
             variant="contained"
@@ -104,6 +113,7 @@ const TagManager = () => {
             color="primary"
             className="submitBtn"
             onClick={uploadTag}
+            disabled={addDisabled}
           >
             + Add
           </Button>
