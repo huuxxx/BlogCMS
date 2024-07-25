@@ -7,14 +7,12 @@ import Cookies from 'universal-cookie';
 import ConfirmModal from '../Modals/ConfirmModal';
 
 const cookies = new Cookies();
-const token = cookies.get('token');
 
 const axios = require('axios').default;
 
 const TAGS_ENDPOINT = process.env.REACT_APP_ENDPOINT_TAGS;
 
 const TagManager = () => {
-  //   const [loading, setLoading] = useState(true);
   const [allTags, setAllTags] = useState<string[]>([]);
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [newTag, setNewTag] = useState('');
@@ -62,7 +60,7 @@ const TagManager = () => {
           name: newTag,
         },
         {
-          headers: { Authorization: `Bearer ${token}` },
+          headers: { Authorization: `Bearer ${cookies.get('token')}` },
         }
       )
       .then((response: AxiosResponse) => {
@@ -83,7 +81,7 @@ const TagManager = () => {
     axios
       .delete(TAGS_ENDPOINT, {
         data: selectedTags,
-        headers: { Authorization: `Bearer ${token}` },
+        headers: { Authorization: `Bearer ${cookies.get('token')}` },
       })
       .then((response: AxiosResponse) => {
         if (response.status === 200) {

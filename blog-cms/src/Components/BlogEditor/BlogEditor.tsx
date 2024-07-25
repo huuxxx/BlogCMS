@@ -13,7 +13,6 @@ import { Button, CircularProgress, TextField } from '@mui/material';
 import TagButton from '../TagButton/TagButton';
 
 const cookies = new Cookies();
-const token = cookies.get('token');
 
 const axios = require('axios').default;
 
@@ -32,8 +31,8 @@ const BlogEditor: React.FC<Props> = ({ blogId, editBlog }) => {
   const [buttonState, setButtonState] = useState(false);
   const [titleState, setTitleState] = useState('');
   const [showModal, setShowModal] = useState(false);
-  const [blogTags, setBlogTags] = useState(['']);
-  const [allTags, setAllTags] = useState(['']);
+  const [blogTags, setBlogTags] = useState<string[]>([]);
+  const [allTags, setAllTags] = useState<string[]>([]);
   const [editorState, setEditorState] = useState(() =>
     EditorState.createEmpty()
   );
@@ -81,7 +80,7 @@ const BlogEditor: React.FC<Props> = ({ blogId, editBlog }) => {
       axios
         .post(IMAGE_ENDPOINT!, formData, {
           headers: {
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${cookies.get('token')}`,
           },
         })
         .then((response) => {
@@ -108,7 +107,7 @@ const BlogEditor: React.FC<Props> = ({ blogId, editBlog }) => {
           tags: blogTags,
         },
         {
-          headers: { Authorization: `Bearer ${token}` },
+          headers: { Authorization: `Bearer ${cookies.get('token')}` },
         }
       )
       .then((response: AxiosResponse) => {
@@ -138,7 +137,7 @@ const BlogEditor: React.FC<Props> = ({ blogId, editBlog }) => {
           tags: blogTags,
         },
         {
-          headers: { Authorization: `Bearer ${token}` },
+          headers: { Authorization: `Bearer ${cookies.get('token')}` },
         }
       )
       .then((response: AxiosResponse) => {
@@ -163,7 +162,7 @@ const BlogEditor: React.FC<Props> = ({ blogId, editBlog }) => {
     setButtonState(true);
     axios
       .delete(`${BLOG_ENDPOINT}/${blogId}`, {
-        headers: { Authorization: `Bearer ${token}` },
+        headers: { Authorization: `Bearer ${cookies.get('token')}` },
       })
       .then((response: AxiosResponse) => {
         if (response.status === 200) {
