@@ -50,6 +50,11 @@ const VisitorsChart = () => {
         accessor: 'viewedAbout',
         Cell: ({ value }) => viewedResultToTick(value),
       },
+      {
+        Header: 'Search',
+        accessor: 'viewedSearch',
+        Cell: ({ value }) => viewedResultToTick(value),
+      },
     ],
     []
   );
